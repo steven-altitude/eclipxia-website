@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090b">
+  <title>Blog de IA Empresarial | Eclipxia — Implementación y Estrategia</title>
+  <meta name="description" content="Artículos sobre implementación de IA empresarial: RAG, automatizaciones, onboarding inteligente, casos de uso reales y lecciones aprendidas en producción.">
+  <meta name="keywords" content="blog IA empresarial, RAG vs fine-tuning, implementar IA empresa, casos de uso IA, estrategia IA corporativa">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://eclipxia.com/blog">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://eclipxia.com/blog">
+  <meta property="og:title" content="Blog de IA Empresarial | Eclipxia">
+  <meta property="og:description" content="Lo que aprendimos implementando IA en empresas reales. Sin hype, con casos reales.">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:site_name" content="Eclipxia">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Blog Eclipxia | IA para Empresas">
+  <meta name="twitter:description" content="Artículos técnicos y estratégicos sobre IA empresarial desde la trinchera de producción.">
+
+  <!-- Structured Data: Blog -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Blog de IA Empresarial — Eclipxia",
+    "url": "https://eclipxia.com/blog",
+    "description": "Artículos sobre implementación de inteligencia artificial para empresas",
+    "inLanguage": "es",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Eclipxia",
+      "url": "https://eclipxia.com"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Geist', 'system-ui', 'sans-serif'] },
+          colors: { accent: '#00D4FF' }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: #00D4FF; transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active::after { width: 100%; }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1); }
+    .mobile-menu.open { transform: translateX(0); }
+    .cta-btn { position: relative; overflow: hidden; }
+    .cta-btn::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.1); transform: translateX(-100%); transition: transform 0.3s ease; }
+    .cta-btn:hover::before { transform: translateX(0); }
+    .hero-word { display: inline-block; }
+    .article-card { transition: transform 0.3s ease; }
+    .article-card:hover { transform: translateY(-4px); }
+    .article-image { transition: transform 0.5s ease; overflow: hidden; }
+    .article-card:hover .article-image img { transform: scale(1.04); }
+    .article-image img { transition: transform 0.5s ease; }
+    .filter-btn { transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
+    .filter-btn.active { background-color: #00D4FF; color: #09090b; border-color: #00D4FF; }
+    .article-item { transition: opacity 0.3s ease, transform 0.3s ease; }
+    .article-item.hidden { display: none; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-50 font-sans antialiased overflow-x-hidden">
+
+  <div class="cursor-glow fixed w-[400px] h-[400px] rounded-full bg-cyan-400/5 pointer-events-none blur-3xl z-0 top-0 left-0" style="will-change: transform;"></div>
+
+  <!-- NAVIGATION -->
+  <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex-shrink-0">
+        <img src="Logos/logo blanco.png" alt="Eclipxia" class="h-8 w-auto">
+      </a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="nav-link text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Inicio</a>
+        <a href="nosotros.html" class="nav-link text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Nosotros</a>
+        <a href="servicios.html" class="nav-link text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Servicios</a>
+        <a href="blog.html" class="nav-link active text-sm text-zinc-300 hover:text-zinc-50 transition-colors">Blog</a>
+        <a href="contacto.html" class="nav-link text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Contacto</a>
+        <a href="contacto.html" class="cta-btn bg-cyan-400 text-zinc-950 text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-cyan-300 transition-colors">
+          Agendar diagnóstico
+        </a>
+      </div>
+      <button id="hamburger" class="lg:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menú">
+        <span class="w-6 h-0.5 bg-zinc-400 transition-all duration-300" id="ham-1"></span>
+        <span class="w-6 h-0.5 bg-zinc-400 transition-all duration-300" id="ham-2"></span>
+        <span class="w-4 h-0.5 bg-zinc-400 transition-all duration-300" id="ham-3"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu fixed inset-0 z-40 bg-zinc-950 flex flex-col justify-center items-start px-10 pt-16">
+    <nav class="flex flex-col gap-8">
+      <a href="index.html" class="text-4xl font-bold text-zinc-400 hover:text-cyan-400 transition-colors">Inicio</a>
+      <a href="nosotros.html" class="text-4xl font-bold text-zinc-400 hover:text-cyan-400 transition-colors">Nosotros</a>
+      <a href="servicios.html" class="text-4xl font-bold text-zinc-400 hover:text-cyan-400 transition-colors">Servicios</a>
+      <a href="blog.html" class="text-4xl font-bold text-zinc-50 hover:text-cyan-400 transition-colors">Blog</a>
+      <a href="contacto.html" class="text-4xl font-bold text-zinc-400 hover:text-cyan-400 transition-colors">Contacto</a>
+    </nav>
+    <a href="contacto.html" class="mt-12 bg-cyan-400 text-zinc-950 font-semibold px-8 py-4 rounded-xl text-lg">Agendar diagnóstico</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="min-h-[40dvh] flex items-end pt-16 bg-zinc-950 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950 to-zinc-950/95 pointer-events-none"></div>
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 w-full pb-16 pt-24 relative z-10">
+      <span class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase block mb-6 hero-eyebrow">Blog</span>
+      <h1 class="text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.05] max-w-[800px]">
+        <span class="hero-word">Lo</span>
+        <span class="hero-word"> que</span>
+        <span class="hero-word"> aprendimos</span>
+        <br>
+        <span class="hero-word">implementando</span>
+        <span class="hero-word"> IA</span>
+        <br>
+        <span class="hero-word">en</span>
+        <span class="hero-word"> empresas</span>
+        <span class="hero-word"> <span class="text-cyan-400">reales.</span></span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- FEATURED ARTICLE -->
+  <section class="bg-zinc-950 pt-10 pb-16">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[60fr_40fr] gap-6 reveal-up">
+        <!-- Featured large card -->
+        <a href="#" class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden block group">
+          <div class="article-image h-72 lg:h-80">
+            <img src="https://picsum.photos/seed/rag-enterprise/800/500" alt="Articulo destacado sobre RAG en empresas" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity">
+          </div>
+          <div class="p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-xs font-semibold bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 px-3 py-1 rounded-full">RAG y Datos</span>
+              <span class="text-xs text-zinc-500">12 min de lectura</span>
+            </div>
+            <h2 class="text-2xl lg:text-3xl font-bold text-zinc-50 mb-3 leading-tight group-hover:text-cyan-400 transition-colors">Por que el 78% de los proyectos RAG fallan antes de llegar a produccion</h2>
+            <p class="text-zinc-400 leading-relaxed mb-6">Despues de implementar mas de 40 sistemas de recuperacion de informacion en empresas reales, identificamos los 5 errores que matan los proyectos RAG. No son los que esperaria.</p>
+            <div class="flex items-center gap-3">
+              <img src="https://picsum.photos/seed/author-rag/40/40" alt="Rodrigo Almeida" class="w-8 h-8 rounded-full object-cover grayscale">
+              <div>
+                <div class="text-sm font-medium text-zinc-300">Rodrigo Almeida</div>
+                <div class="text-xs text-zinc-600">Marzo 2026</div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Two stacked smaller cards -->
+        <div class="flex flex-col gap-6">
+          <a href="#" class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col group">
+            <div class="article-image h-40">
+              <img src="https://picsum.photos/seed/automatizacion-rrhh/600/300" alt="Automatizacion RRHH" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity">
+            </div>
+            <div class="p-6 flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold bg-zinc-800 text-zinc-400 px-2 py-1 rounded-full">Automatizacion</span>
+                <span class="text-xs text-zinc-600">7 min</span>
+              </div>
+              <h3 class="text-lg font-bold text-zinc-50 leading-tight group-hover:text-cyan-400 transition-colors">Automatizar RRHH sin perder lo humano: lecciones de 3 empresas de retail</h3>
+              <div class="mt-4 flex items-center gap-2">
+                <img src="https://picsum.photos/seed/author-valentina/40/40" alt="Valentina Cruz" class="w-6 h-6 rounded-full grayscale">
+                <span class="text-xs text-zinc-500">Valentina Cruz · Feb 2026</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col group">
+            <div class="article-image h-40">
+              <img src="https://picsum.photos/seed/onboarding-ia/600/300" alt="Onboarding IA" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity">
+            </div>
+            <div class="p-6 flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold bg-zinc-800 text-zinc-400 px-2 py-1 rounded-full">Onboarding IA</span>
+                <span class="text-xs text-zinc-600">5 min</span>
+              </div>
+              <h3 class="text-lg font-bold text-zinc-50 leading-tight group-hover:text-cyan-400 transition-colors">De 3 meses a 3 semanas: como un sistema de onboarding IA cambio una planta manufacturera</h3>
+              <div class="mt-4 flex items-center gap-2">
+                <img src="https://picsum.photos/seed/author-marco/40/40" alt="Marco Herrera" class="w-6 h-6 rounded-full grayscale">
+                <span class="text-xs text-zinc-500">Marco Herrera · Ene 2026</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORY FILTER -->
+  <section class="bg-zinc-950 pb-6 sticky top-16 z-30 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-sm">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="flex gap-2 overflow-x-auto py-4 scrollbar-none">
+        <button class="filter-btn active flex-shrink-0 text-sm font-medium px-4 py-2 rounded-full border border-transparent" data-filter="all">Todo</button>
+        <button class="filter-btn flex-shrink-0 text-sm font-medium px-4 py-2 rounded-full border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200" data-filter="rag">RAG y Datos</button>
+        <button class="filter-btn flex-shrink-0 text-sm font-medium px-4 py-2 rounded-full border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200" data-filter="automatizacion">Automatizacion</button>
+        <button class="filter-btn flex-shrink-0 text-sm font-medium px-4 py-2 rounded-full border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200" data-filter="onboarding">Onboarding IA</button>
+        <button class="filter-btn flex-shrink-0 text-sm font-medium px-4 py-2 rounded-full border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200" data-filter="estrategia">Estrategia Enterprise</button>
+        <button class="filter-btn flex-shrink-0 text-sm font-medium px-4 py-2 rounded-full border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200" data-filter="casos">Casos de Uso</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE GRID -->
+  <section class="bg-zinc-950 py-16">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div id="article-grid" class="space-y-6">
+
+        <!-- Article 1 — wide left -->
+        <div class="article-item grid lg:grid-cols-[60fr_40fr] gap-6" data-category="estrategia">
+          <a href="#" class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row group">
+            <div class="article-image lg:w-56 flex-shrink-0 h-48 lg:h-auto">
+              <img src="https://picsum.photos/seed/estrategia-latam/400/300" alt="Estrategia IA LATAM" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity">
+            </div>
+            <div class="p-7 flex flex-col justify-center">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold bg-zinc-800 text-zinc-400 px-2 py-1 rounded-full">Estrategia Enterprise</span>
+                <span class="text-xs text-zinc-600">9 min</span>
+              </div>
+              <h3 class="text-xl font-bold text-zinc-50 leading-tight mb-3 group-hover:text-cyan-400 transition-colors">Adopcion de IA en LATAM: por que las empresas medianas tienen ventaja sobre las grandes</h3>
+              <p class="text-zinc-500 text-sm leading-relaxed mb-4">Las empresas medianas pueden implementar IA sin los 18 meses de gobierno corporativo que paralizan a las grandes. Esta es la ventana de oportunidad.</p>
+              <div class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/author-ana/40/40" alt="Ana Restrepo" class="w-6 h-6 rounded-full grayscale">
+                <span class="text-xs text-zinc-500">Ana Restrepo · Dic 2025</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden group">
+            <div class="article-image h-48">
+              <img src="https://picsum.photos/seed/contratos-legal/600/300" alt="Contratos Legal IA" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold bg-zinc-800 text-zinc-400 px-2 py-1 rounded-full">Casos de Uso</span>
+                <span class="text-xs text-zinc-600">6 min</span>
+              </div>
+              <h3 class="text-lg font-bold text-zinc-50 leading-tight group-hover:text-cyan-400 transition-colors">Revision contractual con IA: lo que funciona, lo que no, y por que los abogados no deben tener miedo</h3>
+              <div class="mt-4 flex items-center gap-2">
+                <img src="https://picsum.photos/seed/author-rag/40/40" alt="Rodrigo Almeida" class="w-6 h-6 rounded-full grayscale">
+                <span class="text-xs text-zinc-500">Rodrigo Almeida · Nov 2025</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Newsletter CTA -->
+        <div class="article-item bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8 lg:p-10" data-category="all">
+          <div class="grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+            <div>
+              <h3 class="text-xl font-bold text-zinc-50 mb-2">Analisis de IA para empresas cada dos semanas</h3>
+              <p class="text-zinc-400 text-sm">Sin ruido de marketing. Solo lo que aprendemos implementando sistemas reales.</p>
+            </div>
+            <form id="newsletter-form" class="flex gap-3 flex-col sm:flex-row min-w-0 lg:min-w-[360px]">
+              <input type="email" placeholder="su@empresa.com" class="flex-1 bg-zinc-900 border border-zinc-800 focus:border-cyan-400 rounded-xl px-4 py-3 text-zinc-50 placeholder-zinc-600 outline-none transition-colors text-sm min-w-0">
+              <button type="submit" class="cta-btn flex-shrink-0 bg-cyan-400 text-zinc-950 font-semibold px-5 py-3 rounded-xl hover:bg-cyan-300 transition-colors text-sm whitespace-nowrap">
+                Suscribirse
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Article 2 — narrow left -->
+        <div class="article-item grid lg:grid-cols-[40fr_60fr] gap-6" data-category="rag">
+          <a href="#" class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden group">
+            <div class="article-image h-52">
+              <img src="https://picsum.photos/seed/embeddings-bd/600/400" alt="Embeddings base de datos" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity">
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold bg-zinc-800 text-zinc-400 px-2 py-1 rounded-full">RAG y Datos</span>
+                <span class="text-xs text-zinc-600">11 min</span>
+              </div>
+              <h3 class="text-lg font-bold text-zinc-50 leading-tight group-hover:text-cyan-400 transition-colors">Pgvector vs Pinecone vs Weaviate: cual elegimos en produccion y por que</h3>
+              <p class="text-zinc-500 text-sm leading-relaxed mt-2 mb-4">Evaluacion practica despues de 8 implementaciones RAG en diferentes escalas y requisitos de latencia.</p>
+              <div class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/author-valentina/40/40" alt="Valentina Cruz" class="w-6 h-6 rounded-full grayscale">
+                <span class="text-xs text-zinc-500">Valentina Cruz · Oct 2025</span>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row group">
+            <div class="article-image lg:w-64 flex-shrink-0 h-48 lg:h-auto">
+              <img src="https://picsum.photos/seed/chatbot-produccion/400/400" alt="Chatbot produccion" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity">
+            </div>
+            <div class="p-7 flex flex-col justify-center">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-semibold bg-zinc-800 text-zinc-400 px-2 py-1 rounded-full">Casos de Uso</span>
+                <span class="text-xs text-zinc-600">8 min</span>
+              </div>
+              <h3 class="text-xl font-bold text-zinc-50 leading-tight mb-3 group-hover:text-cyan-400 transition-colors">Los 6 errores que convierten un chatbot de IA en un chatbot de frustracion</h3>
+              <p class="text-zinc-500 text-sm leading-relaxed mb-4">No todos los chatbots son iguales. Estos son los problemas de diseno que hacen que los usuarios los abandonen en la segunda interaccion.</p>
+              <div class="flex items-center gap-2">
+                <img src="https://picsum.photos/seed/author-marco/40/40" alt="Marco Herrera" class="w-6 h-6 rounded-full grayscale">
+                <span class="text-xs text-zinc-500">Marco Herrera · Sep 2025</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Article 3 — full width wide card -->
+        <div class="article-item" data-category="automatizacion">
+          <a href="#" class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row group h-full">
+            <div class="article-image lg:w-80 flex-shrink-0 h-56 lg:h-auto">
+              <img src="https://picsum.photos/seed/automatizacion-procesos-800/800/500" alt="Automatizacion de procesos" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity">
+            </div>
+            <div class="p-8 lg:p-10 flex flex-col justify-center">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-xs font-semibold bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 px-3 py-1 rounded-full">Automatizacion</span>
+                <span class="text-xs text-zinc-600">14 min de lectura</span>
+              </div>
+              <h3 class="text-2xl lg:text-3xl font-bold text-zinc-50 leading-tight mb-4 group-hover:text-cyan-400 transition-colors">Mapa de procesos para automatizar: como priorizamos en una empresa antes de tocar el codigo</h3>
+              <p class="text-zinc-400 leading-relaxed mb-6">El proceso de identificar que automatizar es tan critico como la automatizacion misma. Aqui esta la metodologia que usamos con cada cliente nuevo para decidir por donde empezar.</p>
+              <div class="flex items-center gap-3">
+                <img src="https://picsum.photos/seed/author-rag/40/40" alt="Rodrigo Almeida" class="w-8 h-8 rounded-full object-cover grayscale">
+                <div>
+                  <div class="text-sm font-medium text-zinc-300">Rodrigo Almeida</div>
+                  <div class="text-xs text-zinc-600">Agosto 2025</div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Load more -->
+      <div class="text-center mt-14 reveal-up">
+        <button class="inline-flex items-center gap-2 border border-zinc-700 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200 px-6 py-3 rounded-xl transition-colors text-sm">
+          Cargar mas articulos <i class="ph ph-arrow-down"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-zinc-900 border-t border-zinc-800">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-12 reveal-stagger">
+        <div>
+          <img src="Logos/logo blanco.png" alt="Eclipxia" class="h-8 w-auto mb-4">
+          <p class="text-zinc-400 text-sm leading-relaxed max-w-xs">Consultora enterprise de IA. Implementaciones que funcionan en produccion.</p>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold tracking-widest text-zinc-500 uppercase mb-4">Empresa</h4>
+          <nav class="flex flex-col gap-3">
+            <a href="nosotros.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Nosotros</a>
+            <a href="blog.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Blog</a>
+            <a href="contacto.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Contacto</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold tracking-widest text-zinc-500 uppercase mb-4">Servicios</h4>
+          <nav class="flex flex-col gap-3">
+            <a href="servicios.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Cerebros Corporativos</a>
+            <a href="servicios.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Automatizaciones</a>
+            <a href="servicios.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Ver todos</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold tracking-widest text-zinc-500 uppercase mb-4">Contacto</h4>
+          <a href="mailto:hola@eclipxia.com" class="text-sm text-zinc-400 hover:text-cyan-400 transition-colors block mb-3">hola@eclipxia.com</a>
+          <div class="flex gap-3 mt-4">
+            <a href="#" class="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors" aria-label="LinkedIn">
+              <i class="ph ph-linkedin-logo text-zinc-400 text-lg"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors" aria-label="X">
+              <i class="ph ph-x-logo text-zinc-400 text-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-zinc-800">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <span class="text-xs text-zinc-600">2026 Eclipxia. Todos los derechos reservados.</span>
+        <span class="text-xs text-zinc-600">Construido con precision para empresas reales.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const glow = document.querySelector('.cursor-glow');
+    document.addEventListener('mousemove', e => {
+      gsap.to(glow, { x: e.clientX - 200, y: e.clientY - 200, duration: 0.8, ease: 'power2.out' });
+    });
+
+    gsap.from('#main-nav', { y: -60, opacity: 0, duration: 0.8, ease: 'power3.out' });
+    gsap.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 });
+    gsap.from('.hero-word', { y: 60, opacity: 0, stagger: 0.06, duration: 0.8, ease: 'power4.out', delay: 0.35 });
+
+    gsap.utils.toArray('.reveal-up').forEach(el => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+        y: 40, opacity: 0, duration: 0.8, ease: 'power3.out'
+      });
+    });
+
+    gsap.utils.toArray('.reveal-stagger').forEach(container => {
+      gsap.from(container.children, {
+        scrollTrigger: { trigger: container, start: 'top 85%' },
+        y: 40, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out'
+      });
+    });
+
+    // Article grid reveal
+    gsap.utils.toArray('.article-item').forEach((el, i) => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+        y: 40, opacity: 0, duration: 0.7, ease: 'power3.out'
+      });
+    });
+
+    // Filter functionality
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const articleItems = document.querySelectorAll('.article-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        articleItems.forEach(item => {
+          const cat = item.dataset.category;
+          const show = filter === 'all' || cat === filter || cat === 'all';
+          if (show) {
+            item.classList.remove('hidden');
+            gsap.from(item, { opacity: 0, y: 20, duration: 0.4, ease: 'power2.out' });
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Newsletter
+    document.getElementById('newsletter-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'Suscrito';
+      btn.classList.remove('bg-cyan-400');
+      btn.classList.add('bg-green-500');
+    });
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let menuOpen = false;
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      document.getElementById('ham-1').style.transform = menuOpen ? 'rotate(45deg) translate(4px, 4px)' : '';
+      document.getElementById('ham-2').style.opacity = menuOpen ? '0' : '';
+      document.getElementById('ham-3').style.transform = menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : '';
+      document.getElementById('ham-3').style.width = menuOpen ? '24px' : '';
+    });
+  </script>
+</body>
+</html>

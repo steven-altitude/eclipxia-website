@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090b">
+  <title>Servicios de IA Empresarial | Eclipxia — RAG, Automatizaciones, Chatbots</title>
+  <meta name="description" content="Servicios de IA para empresas: Cerebros Corporativos, RAG, Onboarding Inteligente, Asesor Contractual IA, Automatizaciones, OpenClaw y Chatbots. Implementación en producción.">
+  <meta name="keywords" content="RAG empresarial, chatbots IA empresas, automatización IA, onboarding inteligente, base conocimiento IA, AnythingLLM implementación, Claude empresas">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://eclipxia.com/servicios">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://eclipxia.com/servicios">
+  <meta property="og:title" content="Servicios de IA Empresarial | Eclipxia">
+  <meta property="og:description" content="8 soluciones de IA para empresas. Todas en producción, no en demo.">
+  <meta property="og:locale" content="es_LA">
+  <meta property="og:site_name" content="Eclipxia">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Servicios IA Empresarial | Eclipxia">
+  <meta name="twitter:description" content="Cerebros Corporativos, RAG, Onboarding IA, Asesor Contractual, Automatizaciones y más.">
+
+  <!-- Structured Data: Service -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Enterprise AI Implementation",
+    "provider": {
+      "@type": "Organization",
+      "name": "Eclipxia",
+      "url": "https://eclipxia.com"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios de IA Empresarial",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Cerebros Corporativos", "description": "Bases de conocimiento privadas con IA para empresas"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Claude para Empresas", "description": "Implementación de Claude Cowork para equipos empresariales"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Habla con tus Datos", "description": "Sistemas RAG para consultar datos empresariales en lenguaje natural"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Onboarding Inteligente", "description": "IA para incorporación de nuevos colaboradores"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Asesor Contractual IA", "description": "Revisión y análisis de contratos con inteligencia artificial"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Automatizaciones", "description": "Automatización de procesos empresariales con IA"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "OpenClaw", "description": "Framework propietario para despliegue de IA empresarial"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Chatbots de IA", "description": "Chatbots empresariales personalizados con IA"}}
+      ]
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Geist', 'system-ui', 'sans-serif'] },
+          colors: { accent: '#00D4FF' }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: #00D4FF; transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active::after { width: 100%; }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1); }
+    .mobile-menu.open { transform: translateX(0); }
+    .cta-btn { position: relative; overflow: hidden; }
+    .cta-btn::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.1); transform: translateX(-100%); transition: transform 0.3s ease; }
+    .cta-btn:hover::before { transform: translateX(0); }
+    .hero-word { display: inline-block; }
+    @keyframes gradient-sweep {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(400%); }
+    }
+    .gradient-line { overflow: hidden; position: relative; }
+    .gradient-line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, #00D4FF20, transparent);
+      animation: gradient-sweep 4s linear infinite;
+    }
+    .category-card { transition: border-color 0.3s ease, opacity 0.4s ease; cursor: pointer; }
+    .category-card.dimmed { opacity: 0.4; }
+    .category-card:hover { border-color: rgba(0, 212, 255, 0.4); }
+    .category-card.active { border-color: rgba(0, 212, 255, 0.6); }
+    .service-section { border-top: 1px solid #27272a; }
+    .service-section:first-child { border-top: none; }
+    .tab-btn { transition: color 0.2s ease, border-color 0.2s ease; }
+    .tab-btn.active { color: #00D4FF; border-bottom-color: #00D4FF; }
+    .use-case { display: none; }
+    .use-case.active { display: block; }
+    .service-detail { display: none; overflow: hidden; }
+    .service-detail.open { display: block; }
+    .benefit-item { display: flex; align-items: flex-start; gap: 12px; }
+    .num-bg { position: absolute; top: -20px; right: 0; font-size: 120px; font-weight: 900; color: #27272a; line-height: 1; user-select: none; pointer-events: none; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-50 font-sans antialiased overflow-x-hidden">
+
+  <div class="cursor-glow fixed w-[400px] h-[400px] rounded-full bg-cyan-400/5 pointer-events-none blur-3xl z-0 top-0 left-0" style="will-change: transform;"></div>
+
+  <!-- NAVIGATION -->
+  <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex-shrink-0">
+        <img src="Logos/logo blanco.png" alt="Eclipxia" class="h-8 w-auto">
+      </a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="nav-link text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Inicio</a>
+        <a href="nosotros.html" class="nav-link text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Nosotros</a>
+        <a href="servicios.html" class="nav-link active text-sm text-zinc-300 hover:text-zinc-50 transition-colors">Servicios</a>
+        <a href="blog.html" class="nav-link text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Blog</a>
+        <a href="contacto.html" class="nav-link text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Contacto</a>
+        <a href="contacto.html" class="cta-btn bg-cyan-400 text-zinc-950 text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-cyan-300 transition-colors">
+          Agendar diagnóstico
+        </a>
+      </div>
+      <button id="hamburger" class="lg:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menú">
+        <span class="w-6 h-0.5 bg-zinc-400 transition-all duration-300" id="ham-1"></span>
+        <span class="w-6 h-0.5 bg-zinc-400 transition-all duration-300" id="ham-2"></span>
+        <span class="w-4 h-0.5 bg-zinc-400 transition-all duration-300" id="ham-3"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu fixed inset-0 z-40 bg-zinc-950 flex flex-col justify-center items-start px-10 pt-16">
+    <nav class="flex flex-col gap-8">
+      <a href="index.html" class="text-4xl font-bold text-zinc-400 hover:text-cyan-400 transition-colors">Inicio</a>
+      <a href="nosotros.html" class="text-4xl font-bold text-zinc-400 hover:text-cyan-400 transition-colors">Nosotros</a>
+      <a href="servicios.html" class="text-4xl font-bold text-zinc-50 hover:text-cyan-400 transition-colors">Servicios</a>
+      <a href="blog.html" class="text-4xl font-bold text-zinc-400 hover:text-cyan-400 transition-colors">Blog</a>
+      <a href="contacto.html" class="text-4xl font-bold text-zinc-400 hover:text-cyan-400 transition-colors">Contacto</a>
+    </nav>
+    <a href="contacto.html" class="mt-12 bg-cyan-400 text-zinc-950 font-semibold px-8 py-4 rounded-xl text-lg">Agendar diagnóstico</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="min-h-[50dvh] flex flex-col justify-center pt-16 bg-zinc-950 relative overflow-hidden">
+    <div class="gradient-line absolute bottom-0 left-0 right-0 h-px bg-zinc-800"></div>
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 w-full py-20">
+      <!-- Breadcrumb -->
+      <div class="hero-eyebrow flex items-center gap-2 mb-8 text-sm text-zinc-600">
+        <a href="index.html" class="hover:text-zinc-400 transition-colors">Inicio</a>
+        <i class="ph ph-caret-right text-xs"></i>
+        <span class="text-zinc-400">Servicios</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.05] max-w-[800px]">
+        <span class="hero-word">Ocho</span>
+        <span class="hero-word"> soluciones.</span>
+        <br>
+        <span class="hero-word">Una</span>
+        <span class="hero-word"> sola</span>
+        <span class="hero-word"> pregunta:</span>
+        <br>
+        <span class="hero-word text-cyan-400">¿funciona</span>
+        <span class="hero-word"> en</span>
+        <span class="hero-word"> producción?</span>
+      </h1>
+      <p class="hero-sub text-lg text-zinc-400 mt-6 max-w-xl">Cada solución está diseñada para conectarse con sus sistemas reales — no para vivir en un sandbox.</p>
+    </div>
+  </section>
+
+  <!-- CATEGORY CARDS -->
+  <section class="bg-zinc-950 py-16">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-5 gap-5 reveal-stagger" id="category-grid">
+        <div class="category-card col-span-5 lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-2xl p-8 active" data-category="conocimiento">
+          <div class="w-12 h-12 rounded-xl bg-cyan-400/10 flex items-center justify-center mb-5">
+            <i class="ph ph-books text-cyan-400 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-zinc-50 mb-3">Inteligencia de Conocimiento</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed mb-5">Sistemas que encuentran, estructuran y hacen disponible el conocimiento que ya existe en su empresa — contratos, manuales, políticas, historial.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">Cerebros Corporativos</span>
+            <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">Habla con tus Datos</span>
+            <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">Asesor Contractual</span>
+          </div>
+        </div>
+        <div class="category-card col-span-5 lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-2xl p-8" data-category="personas">
+          <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-5">
+            <i class="ph ph-users text-cyan-400 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-zinc-50 mb-3">IA para Personas y Procesos</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed mb-5">Automatizaciones y asistentes que reducen trabajo manual, aceleran onboarding y mejoran la experiencia de colaboradores y clientes.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">Onboarding Inteligente</span>
+            <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">Chatbots de IA</span>
+            <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">Automatizaciones</span>
+          </div>
+        </div>
+        <div class="category-card col-span-5 lg:col-span-1 bg-zinc-900 border border-zinc-800 rounded-2xl p-8" data-category="enterprise">
+          <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-5">
+            <i class="ph ph-building-office text-cyan-400 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-zinc-50 mb-3">Implementación Enterprise</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed mb-5">Para organizaciones que necesitan arquitectura de IA a nivel corporativo con control total.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">Claude Enterprise</span>
+            <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">OpenClaw</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES DETAIL -->
+  <section class="bg-zinc-950 py-4 pb-28">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+
+      <!-- Service 1 -->
+      <div class="service-section py-20 relative reveal-up">
+        <div class="num-bg">01</div>
+        <div class="grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start relative z-10">
+          <div>
+            <div class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase mb-4">Inteligencia de Conocimiento</div>
+            <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-3">Cerebros Corporativos</h2>
+            <p class="text-xl text-cyan-400 font-medium mb-6">Su conocimiento institucional, finalmente disponible.</p>
+            <a href="contacto.html" class="inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-500 px-5 py-3 rounded-xl transition-colors text-sm">
+              Solicitar propuesta <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+          <div>
+            <p class="text-zinc-400 leading-relaxed mb-6">Construimos sistemas de recuperación de información (RAG) que indexan toda la documentación de su empresa — manuales, políticas, contratos, emails, wikis — y los hacen consultables en lenguaje natural. No buscadores. Sistemas que entienden el contexto y entregan respuestas precisas con referencias.</p>
+            <p class="text-zinc-400 leading-relaxed mb-8">Su equipo deja de buscar en carpetas. La respuesta aparece en segundos, con la fuente exacta de donde proviene.</p>
+            <div class="space-y-4">
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Respuestas con citas: cada respuesta incluye la fuente exacta del documento</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Indexación incremental: nuevos documentos aparecen disponibles en minutos</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Control de acceso: cada empleado ve solo lo que tiene permisos para ver</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="service-section py-20 relative reveal-up">
+        <div class="num-bg">02</div>
+        <div class="grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start relative z-10">
+          <div>
+            <div class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase mb-4">Implementación Enterprise</div>
+            <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-3">Claude para Empresas</h2>
+            <p class="text-xl text-cyan-400 font-medium mb-6">El asistente que conoce su empresa.</p>
+            <a href="contacto.html" class="inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-500 px-5 py-3 rounded-xl transition-colors text-sm">
+              Solicitar propuesta <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+          <div>
+            <p class="text-zinc-400 leading-relaxed mb-6">Implementamos Claude de Anthropic dentro de su infraestructura con configuraciones específicas para su industria, sus procesos y su cultura corporativa. No es el mismo Claude que cualquiera puede usar en el navegador — es uno entrenado con el contexto de su empresa.</p>
+            <p class="text-zinc-400 leading-relaxed mb-8">Políticas de uso definidas por usted. Datos que no salen de su infraestructura. Capacidad de auditar cada interacción.</p>
+            <div class="space-y-4">
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Despliegue en su VPC o infraestructura cloud propia</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Políticas de uso y restricciones configuradas por su equipo</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Logs completos de uso para auditoría y cumplimiento</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="service-section py-20 relative reveal-up">
+        <div class="num-bg">03</div>
+        <div class="grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start relative z-10">
+          <div>
+            <div class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase mb-4">Inteligencia de Conocimiento</div>
+            <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-3">Habla con tus Datos</h2>
+            <p class="text-xl text-cyan-400 font-medium mb-6">Preguntas en lenguaje natural. Respuestas en datos reales.</p>
+            <a href="contacto.html" class="inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-500 px-5 py-3 rounded-xl transition-colors text-sm">
+              Solicitar propuesta <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+          <div>
+            <p class="text-zinc-400 leading-relaxed mb-6">Conectamos sus bases de datos, ERP, CRM y dashboards a una interfaz conversacional. "¿Cuánto vendimos en Bogotá el Q3 comparado con el año anterior?" — respuesta en segundos, sin esperar al analista.</p>
+            <p class="text-zinc-400 leading-relaxed mb-8">El sistema genera SQL, lo ejecuta contra sus datos reales, y entrega la respuesta en lenguaje humano con gráficos cuando aplica.</p>
+            <div class="space-y-4">
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Compatible con PostgreSQL, MySQL, BigQuery, Snowflake, SAP y más</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Validación de SQL antes de ejecutar — no corre consultas destructivas</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Exportación de resultados a Excel, PDF o Slack directo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="service-section py-20 relative reveal-up">
+        <div class="num-bg">04</div>
+        <div class="grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start relative z-10">
+          <div>
+            <div class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase mb-4">IA para Personas</div>
+            <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-3">Onboarding Inteligente</h2>
+            <p class="text-xl text-cyan-400 font-medium mb-6">Nuevos colaboradores productivos desde la primera semana.</p>
+            <a href="contacto.html" class="inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-500 px-5 py-3 rounded-xl transition-colors text-sm">
+              Solicitar propuesta <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+          <div>
+            <p class="text-zinc-400 leading-relaxed mb-6">Un asistente de IA que acompaña al nuevo empleado desde el día uno: explica procesos, responde preguntas frecuentes, conecta con las personas correctas y mide el progreso de adaptación.</p>
+            <p class="text-zinc-400 leading-relaxed mb-8">El equipo de RRHH deja de repetir las mismas respuestas. Los nuevos colaboradores aprenden más rápido. La rotación por desorientación inicial baja.</p>
+            <div class="space-y-4">
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Rutas de aprendizaje personalizadas por rol y departamento</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Integración con Slack, Teams o su intranet actual</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Dashboard para RRHH con métricas de progreso y puntos de fricción</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 5 -->
+      <div class="service-section py-20 relative reveal-up">
+        <div class="num-bg">05</div>
+        <div class="grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start relative z-10">
+          <div>
+            <div class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase mb-4">Inteligencia de Conocimiento</div>
+            <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-3">Asesor Contractual IA</h2>
+            <p class="text-xl text-cyan-400 font-medium mb-6">Revisión de contratos en minutos.</p>
+            <a href="contacto.html" class="inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-500 px-5 py-3 rounded-xl transition-colors text-sm">
+              Solicitar propuesta <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+          <div>
+            <p class="text-zinc-400 leading-relaxed mb-6">Sistema de análisis de contratos que identifica cláusulas de riesgo, compara con sus estándares contractuales y genera un resumen ejecutivo antes de que el equipo legal dedique horas de revisión.</p>
+            <p class="text-zinc-400 leading-relaxed mb-8">No reemplaza al abogado. Le ahorra las horas que el abogado dedica a leer contratos de bajo riesgo para que pueda enfocarse en lo que realmente importa.</p>
+            <div class="space-y-4">
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Comparación automática contra su biblioteca de contratos estándar</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Identificación de cláusulas inusuales con referencias de riesgo</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Resumen ejecutivo en español listo para decisores no legales</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 6 -->
+      <div class="service-section py-20 relative reveal-up">
+        <div class="num-bg">06</div>
+        <div class="grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start relative z-10">
+          <div>
+            <div class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase mb-4">IA para Procesos</div>
+            <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-3">Automatizaciones</h2>
+            <p class="text-xl text-cyan-400 font-medium mb-6">Menos trabajo manual. Más trabajo real.</p>
+            <a href="contacto.html" class="inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-500 px-5 py-3 rounded-xl transition-colors text-sm">
+              Solicitar propuesta <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+          <div>
+            <p class="text-zinc-400 leading-relaxed mb-6">Identificamos los flujos de trabajo que consumen más tiempo de su equipo — extracción de datos de PDFs, clasificación de emails, generación de reportes, aprobaciones — y los automatizamos con IA conectada a sus sistemas actuales.</p>
+            <p class="text-zinc-400 leading-relaxed mb-8">No remplazamos personas. Eliminamos el trabajo repetitivo para que las personas hagan el trabajo que requiere criterio.</p>
+            <div class="space-y-4">
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Auditoría previa de procesos para priorizar el mayor impacto</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Integración nativa con sus herramientas: SAP, Salesforce, Gmail, Notion</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Monitoreo y alertas para cuando la automatización necesita intervención humana</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 7 -->
+      <div class="service-section py-20 relative reveal-up">
+        <div class="num-bg">07</div>
+        <div class="grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start relative z-10">
+          <div>
+            <div class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase mb-4">Implementación Enterprise</div>
+            <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-3">OpenClaw</h2>
+            <p class="text-xl text-cyan-400 font-medium mb-6">Framework propio. Resultados probados en campo.</p>
+            <a href="contacto.html" class="inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-500 px-5 py-3 rounded-xl transition-colors text-sm">
+              Solicitar propuesta <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+          <div>
+            <p class="text-zinc-400 leading-relaxed mb-6">OpenClaw es el framework de implementación de IA desarrollado por Eclipxia a partir de 43 proyectos en producción. Define la arquitectura, los patrones de integración y los estándares de calidad que aplicamos en cada implementación enterprise.</p>
+            <p class="text-zinc-400 leading-relaxed mb-8">Para clientes que necesitan una base sólida desde el inicio y quieren evitar los errores que ya cometimos nosotros en proyectos anteriores.</p>
+            <div class="space-y-4">
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Arquitectura de referencia probada en producción real</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Patrones de integración para los ERP y CRM más comunes en LATAM</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Documentación completa transferible a su equipo de ingeniería</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 8 -->
+      <div class="service-section py-20 relative reveal-up">
+        <div class="num-bg">08</div>
+        <div class="grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start relative z-10">
+          <div>
+            <div class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase mb-4">IA para Personas</div>
+            <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-3">Chatbots de IA</h2>
+            <p class="text-xl text-cyan-400 font-medium mb-6">Conversaciones que convierten. No que frustran.</p>
+            <a href="contacto.html" class="inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 border border-zinc-700 hover:border-zinc-500 px-5 py-3 rounded-xl transition-colors text-sm">
+              Solicitar propuesta <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+          <div>
+            <p class="text-zinc-400 leading-relaxed mb-6">Construimos chatbots que entienden el contexto de su empresa, saben cuándo escalar a un humano y mantienen la conversación en el tono de su marca. No son bots de árbol de decisión — son sistemas conversacionales entrenados con su contenido real.</p>
+            <p class="text-zinc-400 leading-relaxed mb-8">Para soporte al cliente, ventas, RRHH interno o cualquier punto de contacto donde la velocidad de respuesta importa y los volúmenes hacen imposible la atención 100% humana.</p>
+            <div class="space-y-4">
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Escalada inteligente a humano con contexto completo de la conversación</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Multicanal: web, WhatsApp Business, Telegram, Slack</span>
+              </div>
+              <div class="benefit-item">
+                <i class="ph ph-check-circle text-cyan-400 text-xl flex-shrink-0 mt-0.5"></i>
+                <span class="text-zinc-300">Analytics de conversaciones para identificar patrones y mejorar continuamente</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- USE CASES STRIP -->
+  <section class="bg-zinc-900 py-20 border-t border-zinc-800">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <h2 class="reveal-up text-2xl font-bold mb-10">Casos de uso por industria</h2>
+      <div class="reveal-up">
+        <!-- Tab buttons -->
+        <div class="flex gap-0 border-b border-zinc-800 mb-10 overflow-x-auto">
+          <button class="tab-btn active text-sm font-medium px-6 py-3 text-cyan-400 border-b-2 border-cyan-400 whitespace-nowrap" data-tab="logistica">Logistica</button>
+          <button class="tab-btn text-sm font-medium px-6 py-3 text-zinc-400 border-b-2 border-transparent hover:text-zinc-200 transition-colors whitespace-nowrap" data-tab="finanzas">Finanzas</button>
+          <button class="tab-btn text-sm font-medium px-6 py-3 text-zinc-400 border-b-2 border-transparent hover:text-zinc-200 transition-colors whitespace-nowrap" data-tab="legal">Legal</button>
+          <button class="tab-btn text-sm font-medium px-6 py-3 text-zinc-400 border-b-2 border-transparent hover:text-zinc-200 transition-colors whitespace-nowrap" data-tab="rrhh">RRHH</button>
+          <button class="tab-btn text-sm font-medium px-6 py-3 text-zinc-400 border-b-2 border-transparent hover:text-zinc-200 transition-colors whitespace-nowrap" data-tab="operaciones">Operaciones</button>
+        </div>
+        <!-- Tab content -->
+        <div id="tab-logistica" class="use-case active grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-4">Operador logistico regional</h3>
+            <p class="text-zinc-400 leading-relaxed mb-4">Un operador con 340 proveedores y 12 almacenes necesitaba tiempo medio de respuesta a clientes de menos de 2 horas. Su equipo dedicaba 6 horas diarias buscando información de estado de envios en 4 sistemas diferentes.</p>
+            <p class="text-zinc-400 leading-relaxed mb-6">Implementamos un sistema de consulta unificada que conecta todos los sistemas y permite que el equipo de atención responda en lenguaje natural. Tiempo de respuesta: de 4 horas a 18 minutos.</p>
+            <div class="flex items-center gap-3">
+              <span class="text-3xl font-black text-cyan-400">18 min</span>
+              <span class="text-zinc-500 text-sm">tiempo de respuesta promedio — antes: 4 horas</span>
+            </div>
+          </div>
+          <div class="bg-zinc-950 rounded-xl p-6 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-600 mb-3">Servicio aplicado</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Habla con tus Datos</span></div>
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Chatbots de IA</span></div>
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Automatizaciones</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-finanzas" class="use-case grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-4">Firma de auditoria</h3>
+            <p class="text-zinc-400 leading-relaxed mb-4">Firma con 80 auditores que revisaban manualmente miles de transacciones para identificar anomalias. Cada auditor dedicaba 40% de su tiempo a tareas de clasificacion y busqueda en bases de datos históricas.</p>
+            <p class="text-zinc-400 leading-relaxed mb-6">Sistema de análisis automatizado que clasifica transacciones, identifica patrones sospechosos y genera reportes pre-auditados. Los auditores ahora revisan solo lo que el sistema marca como relevante.</p>
+            <div class="flex items-center gap-3">
+              <span class="text-3xl font-black text-cyan-400">60%</span>
+              <span class="text-zinc-500 text-sm">reducción en tiempo de revisión por auditor</span>
+            </div>
+          </div>
+          <div class="bg-zinc-950 rounded-xl p-6 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-600 mb-3">Servicio aplicado</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Habla con tus Datos</span></div>
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Cerebros Corporativos</span></div>
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Automatizaciones</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-legal" class="use-case grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-4">Departamento legal corporativo</h3>
+            <p class="text-zinc-400 leading-relaxed mb-4">Empresa con 200 contratos activos de proveedores. El equipo legal dedicaba 3 días a revisar cada contrato nuevo antes de recomendar firma. El backlog crecía más rápido que la capacidad de revisión.</p>
+            <p class="text-zinc-400 leading-relaxed mb-6">Implementamos el Asesor Contractual IA. Los contratos de bajo riesgo pasan en 20 minutos. Solo los de alto riesgo van a revisión completa por el equipo legal.</p>
+            <div class="flex items-center gap-3">
+              <span class="text-3xl font-black text-cyan-400">20 min</span>
+              <span class="text-zinc-500 text-sm">revisión de contratos estándar — antes: 3 días</span>
+            </div>
+          </div>
+          <div class="bg-zinc-950 rounded-xl p-6 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-600 mb-3">Servicio aplicado</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Asesor Contractual IA</span></div>
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Cerebros Corporativos</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-rrhh" class="use-case grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-4">Empresa con alta rotacion</h3>
+            <p class="text-zinc-400 leading-relaxed mb-4">Empresa de retail con 500 empleados y rotación del 35% anual. El equipo de RRHH dedicaba la mitad de su tiempo a onboarding y respondiendo las mismas preguntas a empleados nuevos semana a semana.</p>
+            <p class="text-zinc-400 leading-relaxed mb-6">Sistema de Onboarding Inteligente que automatiza el 80% de las preguntas frecuentes y crea rutas de aprendizaje personalizadas por rol. RRHH se libero para trabajo estratégico.</p>
+            <div class="flex items-center gap-3">
+              <span class="text-3xl font-black text-cyan-400">-50%</span>
+              <span class="text-zinc-500 text-sm">tiempo de RRHH dedicado a onboarding repetitivo</span>
+            </div>
+          </div>
+          <div class="bg-zinc-950 rounded-xl p-6 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-600 mb-3">Servicio aplicado</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Onboarding Inteligente</span></div>
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Chatbots de IA</span></div>
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Cerebros Corporativos</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-operaciones" class="use-case grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-4">Manufacturera mediana</h3>
+            <p class="text-zinc-400 leading-relaxed mb-4">Planta con 8 lineas de produccion y documentación de procesos desactualizada. Los supervisores nuevos tardaban 3 meses en operar con autonomía. La curva de aprendizaje impactaba la producción.</p>
+            <p class="text-zinc-400 leading-relaxed mb-6">Cerebro Corporativo indexado con manuales de equipo, procedimientos de operación y historial de incidencias. Supervisores nuevos consultan en lenguaje natural y obtienen el procedimiento exacto con pasos específicos.</p>
+            <div class="flex items-center gap-3">
+              <span class="text-3xl font-black text-cyan-400">6 sem</span>
+              <span class="text-zinc-500 text-sm">autonomia operativa — antes: 3 meses</span>
+            </div>
+          </div>
+          <div class="bg-zinc-950 rounded-xl p-6 border border-zinc-800">
+            <div class="text-xs font-mono text-zinc-600 mb-3">Servicio aplicado</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Cerebros Corporativos</span></div>
+              <div class="flex items-center gap-2"><i class="ph ph-check text-cyan-400 text-sm"></i><span class="text-sm text-zinc-300">Onboarding Inteligente</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-zinc-950 py-24 border-t border-zinc-800">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 text-center">
+      <div class="reveal-up max-w-2xl mx-auto">
+        <h2 class="text-3xl lg:text-4xl font-black tracking-tight mb-4">¿Cual de estas soluciones necesita?</h2>
+        <p class="text-zinc-400 mb-8">Cuéntenos su situación. Sin compromiso, sin PowerPoint. Solo una conversación técnica honesta.</p>
+        <a href="contacto.html" class="cta-btn inline-flex items-center gap-2 bg-cyan-400 text-zinc-950 font-bold px-8 py-4 rounded-xl hover:bg-cyan-300 transition-colors">
+          Agendar diagnóstico gratuito <i class="ph ph-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-zinc-900 border-t border-zinc-800">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-12">
+        <div>
+          <img src="Logos/logo blanco.png" alt="Eclipxia" class="h-8 w-auto mb-4">
+          <p class="text-zinc-400 text-sm leading-relaxed max-w-xs">Consultora enterprise de IA. Implementaciones que funcionan en producción.</p>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold tracking-widest text-zinc-500 uppercase mb-4">Empresa</h4>
+          <nav class="flex flex-col gap-3">
+            <a href="nosotros.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Nosotros</a>
+            <a href="blog.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Blog</a>
+            <a href="contacto.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Contacto</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold tracking-widest text-zinc-500 uppercase mb-4">Servicios</h4>
+          <nav class="flex flex-col gap-3">
+            <a href="servicios.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Cerebros Corporativos</a>
+            <a href="servicios.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Automatizaciones</a>
+            <a href="servicios.html" class="text-sm text-zinc-400 hover:text-zinc-50 transition-colors">Ver todos</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold tracking-widest text-zinc-500 uppercase mb-4">Contacto</h4>
+          <a href="mailto:hola@eclipxia.com" class="text-sm text-zinc-400 hover:text-cyan-400 transition-colors block mb-3">hola@eclipxia.com</a>
+          <div class="flex gap-3 mt-4">
+            <a href="#" class="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors" aria-label="LinkedIn">
+              <i class="ph ph-linkedin-logo text-zinc-400 text-lg"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors" aria-label="X">
+              <i class="ph ph-x-logo text-zinc-400 text-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-zinc-800">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <span class="text-xs text-zinc-600">2026 Eclipxia. Todos los derechos reservados.</span>
+        <span class="text-xs text-zinc-600">Construido con precision para empresas reales.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const glow = document.querySelector('.cursor-glow');
+    document.addEventListener('mousemove', e => {
+      gsap.to(glow, { x: e.clientX - 200, y: e.clientY - 200, duration: 0.8, ease: 'power2.out' });
+    });
+
+    gsap.from('#main-nav', { y: -60, opacity: 0, duration: 0.8, ease: 'power3.out' });
+    gsap.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 });
+    gsap.from('.hero-word', { y: 60, opacity: 0, stagger: 0.06, duration: 0.8, ease: 'power4.out', delay: 0.35 });
+    gsap.from('.hero-sub', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.9 });
+
+    gsap.utils.toArray('.reveal-up').forEach(el => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+        y: 40, opacity: 0, duration: 0.8, ease: 'power3.out'
+      });
+    });
+
+    gsap.utils.toArray('.reveal-stagger').forEach(container => {
+      gsap.from(container.children, {
+        scrollTrigger: { trigger: container, start: 'top 85%' },
+        y: 40, opacity: 0, stagger: 0.12, duration: 0.7, ease: 'power3.out'
+      });
+    });
+
+    // Category cards interaction
+    const categoryCards = document.querySelectorAll('.category-card');
+    categoryCards.forEach(card => {
+      card.addEventListener('click', () => {
+        categoryCards.forEach(c => {
+          c.classList.remove('active');
+          c.classList.add('dimmed');
+        });
+        card.classList.remove('dimmed');
+        card.classList.add('active');
+        gsap.from(card, { scale: 0.98, duration: 0.3, ease: 'power2.out' });
+        setTimeout(() => {
+          categoryCards.forEach(c => c.classList.remove('dimmed'));
+        }, 2000);
+      });
+    });
+
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const useCases = document.querySelectorAll('.use-case');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        useCases.forEach(uc => {
+          if (uc.id === 'tab-' + tab) {
+            uc.classList.add('active');
+            gsap.from(uc, { opacity: 0, y: 10, duration: 0.4, ease: 'power2.out' });
+          } else {
+            uc.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let menuOpen = false;
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      document.getElementById('ham-1').style.transform = menuOpen ? 'rotate(45deg) translate(4px, 4px)' : '';
+      document.getElementById('ham-2').style.opacity = menuOpen ? '0' : '';
+      document.getElementById('ham-3').style.transform = menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : '';
+      document.getElementById('ham-3').style.width = menuOpen ? '24px' : '';
+    });
+  </script>
+</body>
+</html>
