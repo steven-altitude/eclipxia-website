@@ -1,0 +1,244 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredPost = sortedPosts.find(p => p.data.featured) ?? sortedPosts[0];
+const otherPosts = sortedPosts.filter(p => p.slug !== featuredPost.slug);
+
+const categories = ['Todos', ...new Set(allPosts.map(p => p.data.category))];
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('es-LA', { year: 'numeric', month: 'long' });
+}
+
+function readingTime(body: string) {
+  const words = body.split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Blog de IA Empresarial — Eclipxia",
+  "url": "https://www.eclipxia.com/blog/",
+  "description": "Artículos sobre implementación de inteligencia artificial para empresas",
+  "inLanguage": "es",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Eclipxia",
+    "url": "https://www.eclipxia.com"
+  }
+};
+---
+
+<BaseLayout
+  title="Blog de IA Empresarial | Eclipxia — Implementación y Estrategia"
+  description="Artículos sobre implementación de IA empresarial: RAG, automatizaciones, onboarding inteligente, casos de uso reales y lecciones aprendidas en producción."
+  activePage="blog"
+  jsonLd={jsonLd}
+>
+  <!-- HERO -->
+  <section class="min-h-[40dvh] flex items-end pt-16 bg-zinc-950 relative overflow-hidden">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 w-full pb-16 pt-24 relative z-10">
+      <span class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase block mb-6 hero-eyebrow">Blog</span>
+      <h1 class="text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.05] max-w-[800px]">
+        <span class="hero-word">Lo</span>
+        <span class="hero-word"> que</span>
+        <span class="hero-word"> aprendimos</span>
+        <br />
+        <span class="hero-word">implementando</span>
+        <span class="hero-word"> IA</span>
+        <br />
+        <span class="hero-word">en</span>
+        <span class="hero-word"> empresas</span>
+        <span class="hero-word"> <span class="text-cyan-400">reales.</span></span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- FEATURED POST -->
+  <section class="bg-zinc-950 pt-10 pb-16">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[60fr_40fr] gap-6 reveal-up">
+        <!-- Featured large card -->
+        <a href={`/blog/${featuredPost.slug}/`} class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden block group">
+          {featuredPost.data.image && (
+            <div class="article-image h-72 lg:h-80">
+              <img
+                src={featuredPost.data.image}
+                alt={featuredPost.data.title}
+                class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity"
+              />
+            </div>
+          )}
+          <div class="p-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-xs font-semibold bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 px-3 py-1 rounded-full">{featuredPost.data.category}</span>
+              <span class="text-xs text-zinc-500">{readingTime(featuredPost.body ?? '')} min de lectura</span>
+            </div>
+            <h2 class="text-2xl lg:text-3xl font-bold text-zinc-50 mb-3 leading-tight group-hover:text-cyan-400 transition-colors">{featuredPost.data.title}</h2>
+            <p class="text-zinc-400 leading-relaxed mb-6">{featuredPost.data.description}</p>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-300">
+                {featuredPost.data.author.charAt(0)}
+              </div>
+              <div>
+                <div class="text-sm font-medium text-zinc-300">{featuredPost.data.author}</div>
+                <div class="text-xs text-zinc-600">{formatDate(featuredPost.data.pubDate)}</div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Stacked smaller cards -->
+        <div class="flex flex-col gap-6">
+          {otherPosts.slice(0, 2).map(post => (
+            <a href={`/blog/${post.slug}/`} class="article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col group">
+              {post.data.image && (
+                <div class="article-image h-40">
+                  <img
+                    src={post.data.image}
+                    alt={post.data.title}
+                    class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity"
+                  />
+                </div>
+              )}
+              <div class="p-6 flex-1">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-xs font-semibold bg-zinc-800 text-zinc-400 px-2 py-1 rounded-full">{post.data.category}</span>
+                  <span class="text-xs text-zinc-600">{readingTime(post.body ?? '')} min</span>
+                </div>
+                <h3 class="text-lg font-bold text-zinc-50 leading-tight group-hover:text-cyan-400 transition-colors">{post.data.title}</h3>
+                <div class="mt-4 flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-300">
+                    {post.data.author.charAt(0)}
+                  </div>
+                  <span class="text-xs text-zinc-500">{post.data.author} &middot; {formatDate(post.data.pubDate)}</span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORY FILTER + ALL POSTS -->
+  <section class="bg-zinc-950 pb-28 border-t border-zinc-800">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 pt-12">
+      <!-- Filter buttons -->
+      <div class="flex flex-wrap gap-3 mb-12 reveal-up">
+        {categories.map((cat, i) => (
+          <button
+            class={`filter-btn text-sm px-4 py-2 rounded-full border transition-colors ${i === 0 ? 'active bg-cyan-400 text-zinc-950 border-cyan-400' : 'bg-transparent text-zinc-400 border-zinc-700 hover:border-zinc-500 hover:text-zinc-300'}`}
+            data-category={cat}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <!-- Posts grid — asymmetric alternating -->
+      <div id="posts-grid" class="space-y-6 reveal-stagger">
+        {sortedPosts.map((post, i) => (
+          <a
+            href={`/blog/${post.slug}/`}
+            class={`article-item article-card bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden group flex flex-col lg:flex-row ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
+            data-category={post.data.category}
+          >
+            {post.data.image && (
+              <div class={`article-image flex-shrink-0 h-52 lg:h-auto ${i % 2 === 0 ? 'lg:w-2/5' : 'lg:w-1/3'}`}>
+                <img
+                  src={post.data.image}
+                  alt={post.data.title}
+                  class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-90 transition-opacity"
+                />
+              </div>
+            )}
+            <div class="p-8 flex flex-col justify-center">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-xs font-semibold bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">{post.data.category}</span>
+                <span class="text-xs text-zinc-600">{readingTime(post.body ?? '')} min de lectura</span>
+              </div>
+              <h3 class="text-xl lg:text-2xl font-bold text-zinc-50 mb-3 leading-tight group-hover:text-cyan-400 transition-colors">{post.data.title}</h3>
+              <p class="text-zinc-400 leading-relaxed mb-6">{post.data.description}</p>
+              <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-300">
+                  {post.data.author.charAt(0)}
+                </div>
+                <span class="text-sm text-zinc-500">{post.data.author} &middot; {formatDate(post.data.pubDate)}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Newsletter CTA inline -->
+      <div class="mt-20 reveal-up">
+        <div class="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-8 lg:p-12 grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+          <div>
+            <h3 class="text-xl font-bold text-zinc-50 mb-2">Eso es todo por ahora.</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed max-w-lg">Publicamos cuando tenemos algo real que decir — no seg&uacute;n un calendario editorial. Mientras tanto, si tiene un proyecto de IA en mente, hablemos.</p>
+          </div>
+          <a
+            href="/contacto/"
+            class="cta-btn bg-cyan-400 text-zinc-950 font-semibold px-6 py-3 rounded-xl hover:bg-cyan-300 transition-colors whitespace-nowrap text-sm"
+          >
+            Agendar diagn&oacute;stico
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 });
+  gsap.from('.hero-word', { y: 60, opacity: 0, stagger: 0.05, duration: 0.8, ease: 'power4.out', delay: 0.35 });
+
+  gsap.utils.toArray('.reveal-up').forEach((el: any) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+      y: 40, opacity: 0, duration: 0.8, ease: 'power3.out'
+    });
+  });
+
+  gsap.utils.toArray('.reveal-stagger').forEach((container: any) => {
+    gsap.from(container.children, {
+      scrollTrigger: { trigger: container, start: 'top 85%' },
+      y: 40, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out'
+    });
+  });
+
+  // Category filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const articleItems = document.querySelectorAll('.article-item');
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const category = (btn as HTMLElement).dataset.category;
+
+      filterBtns.forEach((b) => {
+        b.classList.remove('active', 'bg-cyan-400', 'text-zinc-950', 'border-cyan-400');
+        b.classList.add('bg-transparent', 'text-zinc-400', 'border-zinc-700');
+      });
+      btn.classList.add('active', 'bg-cyan-400', 'text-zinc-950', 'border-cyan-400');
+      btn.classList.remove('bg-transparent', 'text-zinc-400', 'border-zinc-700');
+
+      articleItems.forEach((item) => {
+        const el = item as HTMLElement;
+        if (category === 'Todos' || el.dataset.category === category) {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

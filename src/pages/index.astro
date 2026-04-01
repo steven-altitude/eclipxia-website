@@ -1,0 +1,458 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Eclipxia",
+    "url": "https://www.eclipxia.com",
+    "logo": "https://www.eclipxia.com/logos/logo-blanco.png",
+    "description": "Agencia de implementación de inteligencia artificial para empresas en América Latina",
+    "areaServed": "Latin America",
+    "serviceType": ["AI Consulting", "Enterprise AI Implementation", "RAG Systems", "Business Automation"],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "contacto@eclipxia.com",
+      "availableLanguage": "Spanish"
+    },
+    "sameAs": ["https://linkedin.com/company/eclipxia"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Eclipxia",
+    "url": "https://www.eclipxia.com",
+    "inLanguage": "es"
+  }
+];
+---
+
+<BaseLayout
+  title="Eclipxia | Implementación de IA Empresarial en América Latina"
+  description="Eclipxia implementa soluciones de inteligencia artificial para empresas: bases de conocimiento privadas, RAG, automatizaciones y chatbots IA. De piloto a producción en menos de 3 semanas."
+  activePage="inicio"
+  jsonLd={jsonLd}
+>
+  <!-- HERO -->
+  <section class="min-h-[100dvh] flex items-center pt-16 relative overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 w-full py-20 lg:py-0">
+      <div class="grid lg:grid-cols-[58fr_42fr] gap-16 items-center">
+        <!-- Left Column -->
+        <div class="space-y-8">
+          <div class="hero-eyebrow">
+            <span class="text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase">Enterprise AI</span>
+          </div>
+          <h1 class="text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.02]">
+            <span class="hero-word">Inteligencia</span>
+            <span class="hero-word"> artificial</span>
+            <span class="hero-word"> que</span>
+            <br />
+            <span class="hero-word">realmente</span>
+            <span class="hero-word"> <span class="text-cyan-400">funciona</span></span>
+            <br />
+            <span class="hero-word">en</span>
+            <span class="hero-word"> producci&oacute;n.</span>
+          </h1>
+          <p class="hero-sub text-lg text-zinc-400 max-w-lg leading-relaxed">
+            Su empresa ya pag&oacute; por suficientes demos. El problema no es la tecnolog&iacute;a — es que nadie la conect&oacute; a sus sistemas reales, sus datos reales, su gente real.
+          </p>
+          <div class="hero-ctas flex flex-wrap items-center gap-5">
+            <a
+              href="/contacto/"
+              class="cta-btn inline-flex items-center gap-2 bg-cyan-400 text-zinc-950 font-semibold px-7 py-4 rounded-xl hover:bg-cyan-300 transition-colors text-base"
+            >
+              Agendar diagn&oacute;stico gratuito
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href="/servicios/" class="group inline-flex items-center gap-2 text-zinc-300 hover:text-zinc-50 transition-colors text-base">
+              <span class="border-b border-zinc-600 group-hover:border-zinc-300 transition-colors pb-0.5">Ver servicios</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
+            </a>
+          </div>
+          <div class="hero-stats flex flex-wrap gap-6 pt-2">
+            <div class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+              <span class="text-sm text-zinc-400">40+ implementaciones</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+              <span class="text-sm text-zinc-400">Promedio 3 semanas</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+              <span class="text-sm text-zinc-400">0 proyectos abandonados</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column — Animated Knowledge Graph -->
+        <div class="hidden lg:flex items-center justify-center relative">
+          <svg id="knowledge-graph" viewBox="0 0 500 500" class="w-full max-w-[520px]" aria-hidden="true">
+            <defs>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <g id="graph-lines" opacity="0.5">
+              <line id="l0" x1="250" y1="250" x2="80" y2="100" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l1" x1="250" y1="250" x2="180" y2="60" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l2" x1="250" y1="250" x2="320" y2="55" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l3" x1="250" y1="250" x2="420" y2="90" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l4" x1="250" y1="250" x2="460" y2="170" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l5" x1="250" y1="250" x2="470" y2="270" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l6" x1="250" y1="250" x2="440" y2="370" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l7" x1="250" y1="250" x2="370" y2="440" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l8" x1="250" y1="250" x2="250" y2="460" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l9" x1="250" y1="250" x2="140" y2="450" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l10" x1="250" y1="250" x2="60" y2="390" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l11" x1="250" y1="250" x2="45" y2="290" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l12" x1="250" y1="250" x2="55" y2="190" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l13" x1="250" y1="250" x2="100" y2="320" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l14" x1="250" y1="250" x2="390" y2="310" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l15" x1="250" y1="250" x2="340" y2="170" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l16" x1="250" y1="250" x2="160" y2="150" stroke="#3f3f46" stroke-width="1"/>
+              <line id="l17" x1="250" y1="250" x2="130" y2="220" stroke="#3f3f46" stroke-width="1"/>
+            </g>
+            <g id="graph-nodes">
+              <g class="graph-node"><circle cx="80" cy="100" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="80" y="88" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Contratos</text></g>
+              <g class="graph-node"><circle cx="180" cy="60" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="180" y="48" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">RRHH</text></g>
+              <g class="graph-node"><circle cx="320" cy="55" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="320" y="43" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Ventas</text></g>
+              <g class="graph-node"><circle cx="420" cy="90" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="420" y="78" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Legal</text></g>
+              <g class="graph-node"><circle cx="460" cy="170" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="460" y="158" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Finanzas</text></g>
+              <g class="graph-node"><circle cx="470" cy="270" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="470" y="258" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Procesos</text></g>
+              <g class="graph-node"><circle cx="440" cy="370" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="440" y="358" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Docs</text></g>
+              <g class="graph-node"><circle cx="370" cy="440" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="370" y="456" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">BD</text></g>
+              <g class="graph-node"><circle cx="250" cy="460" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="250" y="476" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">API</text></g>
+              <g class="graph-node"><circle cx="140" cy="450" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="140" y="466" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">CRM</text></g>
+              <g class="graph-node"><circle cx="60" cy="390" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="60" y="406" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Wiki</text></g>
+              <g class="graph-node"><circle cx="45" cy="290" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="45" y="278" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Emails</text></g>
+              <g class="graph-node"><circle cx="55" cy="190" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="55" y="178" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Reportes</text></g>
+              <g class="graph-node"><circle cx="100" cy="320" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="100" y="308" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Pol&iacute;ticas</text></g>
+              <g class="graph-node"><circle cx="390" cy="310" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="390" y="298" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Proveedores</text></g>
+              <g class="graph-node"><circle cx="340" cy="170" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="340" y="158" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Clientes</text></g>
+              <g class="graph-node"><circle cx="160" cy="150" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="160" y="138" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">Manuales</text></g>
+              <g class="graph-node"><circle cx="130" cy="220" r="6" fill="#3f3f46" stroke="#71717a" stroke-width="1"/><text x="130" y="208" text-anchor="middle" fill="#71717a" font-size="9" font-family="Satoshi, sans-serif" class="node-label" opacity="0">KPIs</text></g>
+            </g>
+            <!-- Central IA node -->
+            <g id="central-node" opacity="0">
+              <circle cx="250" cy="250" r="28" fill="#00D4FF10" stroke="#00D4FF40" stroke-width="1"/>
+              <circle cx="250" cy="250" r="18" fill="#00D4FF" class="node-central" filter="url(#glow)"/>
+              <text x="250" y="254" text-anchor="middle" fill="#09090b" font-size="10" font-weight="700" font-family="Satoshi, sans-serif">IA</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="bg-zinc-900 border-y border-zinc-800 py-10">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="reveal-up text-center lg:text-left">
+          <div class="text-4xl lg:text-5xl font-black text-cyan-400"><span class="count-up" data-target="40" data-suffix="+">0</span>+</div>
+          <div class="text-sm text-zinc-400 mt-1">implementaciones entregadas</div>
+        </div>
+        <div class="reveal-up text-center lg:text-left">
+          <div class="text-4xl lg:text-5xl font-black text-cyan-400">
+            &lt;<span class="count-up" data-target="3" data-suffix="">0</span>
+          </div>
+          <div class="text-sm text-zinc-400 mt-1">semanas promedio por proyecto</div>
+        </div>
+        <div class="reveal-up text-center lg:text-left">
+          <div class="text-4xl lg:text-5xl font-black text-cyan-400 count-up" data-target="0" data-suffix="">0</div>
+          <div class="text-sm text-zinc-400 mt-1">proyectos abandonados</div>
+        </div>
+        <div class="reveal-up text-center lg:text-left">
+          <div class="text-4xl lg:text-5xl font-black text-cyan-400 count-up" data-target="6" data-suffix="">0</div>
+          <div class="text-sm text-zinc-400 mt-1">pa&iacute;ses en Am&eacute;rica Latina</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EL PROBLEMA -->
+  <section class="bg-zinc-950 py-28">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <h2 class="reveal-up text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight max-w-[65%] leading-[1.05] mb-16">
+        Las empresas no fallan en adoptar IA.<br /><span class="text-zinc-500">Fallan en implementarla.</span>
+      </h2>
+      <div class="grid grid-cols-5 gap-5 reveal-stagger">
+        <div class="col-span-5 lg:col-span-2 bg-zinc-900 border border-zinc-800 p-8 rounded-2xl hover:border-zinc-700 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-zinc-50 mb-3">Conocimiento atrapado</h3>
+          <p class="text-zinc-400 leading-relaxed">A&ntilde;os de documentos, procesos y criterios institucionales que viven en carpetas que nadie puede encontrar cuando los necesita.</p>
+        </div>
+        <div class="col-span-5 lg:col-span-2 bg-zinc-900 border border-zinc-800 p-8 rounded-2xl hover:border-zinc-700 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-zinc-50 mb-3">Pilotos que no escalan</h3>
+          <p class="text-zinc-400 leading-relaxed">El 78% de los proyectos de IA muere en prueba de concepto. No por falta de tecnolog&iacute;a — por falta de quien la conecte a los sistemas reales.</p>
+        </div>
+        <div class="col-span-5 lg:col-span-1 bg-zinc-900 border border-zinc-800 p-8 rounded-2xl hover:border-zinc-700 transition-colors">
+          <div class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-zinc-50 mb-3">Dependencia de terceros</h3>
+          <p class="text-zinc-400 leading-relaxed">Datos que salen de la empresa. Vendors que no entienden el contexto. Contratos que encadenan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES TEASER -->
+  <section class="bg-zinc-900/50 py-28">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="mb-14">
+        <span class="reveal-up text-xs font-semibold tracking-[0.25em] text-cyan-400 uppercase block">Servicios</span>
+        <h2 class="reveal-up text-4xl lg:text-5xl font-black tracking-tight mt-4 mb-4">Lo que construimos.<br /><span class="text-zinc-500">Y por qu&eacute; funciona.</span></h2>
+        <p class="reveal-up text-zinc-400 max-w-lg">Ocho soluciones enfocadas en producci&oacute;n, no en presentaciones. Cada una dise&ntilde;ada para conectar con sus sistemas actuales.</p>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="grid grid-cols-7 gap-4 mb-4 reveal-stagger">
+        <a href="/servicios/" class="service-card col-span-7 lg:col-span-3 bg-zinc-900 border border-zinc-800 hover:border-cyan-400/50 p-7 rounded-xl block">
+          <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-zinc-50 mb-2">Cerebros Corporativos</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed">Su conocimiento institucional, finalmente disponible. RAG sobre sus documentos reales.</p>
+        </a>
+        <a href="/servicios/" class="service-card col-span-7 lg:col-span-2 bg-zinc-900 border border-zinc-800 hover:border-cyan-400/50 p-7 rounded-xl block">
+          <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-zinc-50 mb-2">Claude para Empresas</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed">El asistente que conoce su empresa. No uno gen&eacute;rico.</p>
+        </a>
+        <a href="/servicios/" class="service-card col-span-7 lg:col-span-2 bg-zinc-900 border border-zinc-800 hover:border-cyan-400/50 p-7 rounded-xl block">
+          <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-zinc-50 mb-2">Habla con tus Datos</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed">Preguntas en lenguaje natural. Respuestas en datos reales.</p>
+        </a>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="grid grid-cols-7 gap-4 reveal-stagger">
+        <a href="/servicios/" class="service-card col-span-7 lg:col-span-2 bg-zinc-900 border border-zinc-800 hover:border-cyan-400/50 p-7 rounded-xl block">
+          <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-zinc-50 mb-2">Onboarding Inteligente</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed">Nuevos colaboradores productivos desde la primera semana.</p>
+        </a>
+        <a href="/servicios/" class="service-card col-span-7 lg:col-span-2 bg-zinc-900 border border-zinc-800 hover:border-cyan-400/50 p-7 rounded-xl block">
+          <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-zinc-50 mb-2">Asesor Contractual IA</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed">Revisi&oacute;n de contratos en minutos. Riesgos identificados antes de firmar.</p>
+        </a>
+        <a href="/servicios/" class="service-card col-span-7 lg:col-span-3 bg-zinc-900 border border-zinc-800 hover:border-cyan-400/50 p-7 rounded-xl block">
+          <div class="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-zinc-50 mb-2">Automatizaciones</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed">Menos trabajo manual. M&aacute;s trabajo real. Flujos conectados a sus sistemas existentes.</p>
+        </a>
+      </div>
+
+      <div class="mt-10 reveal-up">
+        <a href="/servicios/" class="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors font-medium">
+          Ver todos los servicios
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="bg-zinc-950 py-28">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <h2 class="reveal-up text-4xl lg:text-5xl font-black tracking-tight mb-20">
+        De diagn&oacute;stico a producci&oacute;n.<br /><span class="text-zinc-500">Sin rodeos.</span>
+      </h2>
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-0 relative">
+        <!-- Connector line -->
+        <div class="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px z-0">
+          <div class="step-connector h-full w-full opacity-30"></div>
+        </div>
+        <div class="step-item relative z-10 flex lg:flex-col gap-6 lg:gap-0 pb-10 lg:pb-0 reveal-up">
+          <div class="flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-2xl border-2 border-cyan-400/50 flex items-center justify-center mb-0 lg:mb-8 bg-zinc-950">
+            <span class="text-2xl lg:text-3xl font-black text-cyan-400">1</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-zinc-50 mb-2">Diagn&oacute;stico</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">Mapeamos sus procesos, datos y sistemas en una sesi&oacute;n de 90 minutos. Sin consultores de traje.</p>
+          </div>
+        </div>
+        <div class="step-item relative z-10 flex lg:flex-col gap-6 lg:gap-0 pb-10 lg:pb-0 lg:pl-8 reveal-up">
+          <div class="flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-2xl border-2 border-zinc-700 flex items-center justify-center mb-0 lg:mb-8 bg-zinc-950">
+            <span class="text-2xl lg:text-3xl font-black text-zinc-400">2</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-zinc-50 mb-2">Dise&ntilde;o t&eacute;cnico</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">Arquitectura espec&iacute;fica para su empresa. Qu&eacute; datos, qu&eacute; modelo, qu&eacute; integraciones. Nada gen&eacute;rico.</p>
+          </div>
+        </div>
+        <div class="step-item relative z-10 flex lg:flex-col gap-6 lg:gap-0 pb-10 lg:pb-0 lg:pl-8 reveal-up">
+          <div class="flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-2xl border-2 border-zinc-700 flex items-center justify-center mb-0 lg:mb-8 bg-zinc-950">
+            <span class="text-2xl lg:text-3xl font-black text-zinc-400">3</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-zinc-50 mb-2">Implementaci&oacute;n</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">Construimos, conectamos, probamos. Entregamos en producci&oacute;n — no en sandbox.</p>
+          </div>
+        </div>
+        <div class="step-item relative z-10 flex lg:flex-col gap-6 lg:gap-0 lg:pl-8 reveal-up">
+          <div class="flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-2xl border-2 border-zinc-700 flex items-center justify-center mb-0 lg:mb-8 bg-zinc-950">
+            <span class="text-2xl lg:text-3xl font-black text-zinc-400">4</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-zinc-50 mb-2">Transferencia</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">Su equipo opera el sistema. Documentaci&oacute;n, capacitaci&oacute;n, soporte. Sin dependencia perpetua.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="bg-zinc-900 py-28 grid-bg relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-transparent pointer-events-none"></div>
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 relative z-10">
+      <div class="grid lg:grid-cols-[55fr_45fr] gap-16 items-center">
+        <div class="reveal-up">
+          <h2 class="text-4xl lg:text-5xl font-black tracking-tight mb-6 leading-[1.1]">
+            Su empresa ya tiene los datos.<br />
+            <span class="text-zinc-500">Le falta el sistema que los haga trabajar.</span>
+          </h2>
+          <p class="text-zinc-400 text-lg leading-relaxed mb-8">
+            Cada semana que pasa sin un sistema de IA funcional, su equipo responde las mismas preguntas, busca los mismos documentos, comete los mismos errores evitables.
+          </p>
+          <div class="flex flex-col gap-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span class="text-zinc-400">Sin contratos de retenci&oacute;n de 12 meses</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span class="text-zinc-400">Diagn&oacute;stico inicial sin costo</span>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span class="text-zinc-400">Sus datos permanecen en su infraestructura</span>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-up">
+          <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-8">
+            <h3 class="text-xl font-bold text-zinc-50 mb-2">Reservar diagn&oacute;stico gratuito</h3>
+            <p class="text-zinc-400 text-sm mb-6">90 minutos. Sin PowerPoint. Solo an&aacute;lisis de su situaci&oacute;n real.</p>
+            <a
+              href="/contacto/"
+              class="cta-btn block w-full text-center bg-cyan-400 text-zinc-950 font-bold py-4 rounded-xl hover:bg-cyan-300 transition-colors"
+            >
+              Solicitar diagn&oacute;stico gratuito
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero animations
+  gsap.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 });
+  gsap.from('.hero-word', { y: 60, opacity: 0, stagger: 0.06, duration: 0.8, ease: 'power4.out', delay: 0.35 });
+  gsap.from('.hero-sub', { y: 30, opacity: 0, duration: 0.7, ease: 'power3.out', delay: 0.9 });
+  gsap.from('.hero-ctas', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 1.1 });
+  gsap.from('.hero-stats', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 1.3 });
+
+  // Knowledge graph animation
+  const centralNode = document.getElementById('central-node');
+  const graphLines = document.querySelectorAll('#graph-lines line');
+  const graphNodes = document.querySelectorAll('.graph-node circle');
+  const nodeLabels = document.querySelectorAll('.node-label');
+
+  if (centralNode) {
+    // Animate lines
+    graphLines.forEach((line, i) => {
+      const length = Math.sqrt(
+        Math.pow(Number((line as SVGLineElement).getAttribute('x2')) - 250, 2) +
+        Math.pow(Number((line as SVGLineElement).getAttribute('y2')) - 250, 2)
+      );
+      (line as SVGLineElement).style.strokeDasharray = String(length);
+      (line as SVGLineElement).style.strokeDashoffset = String(length);
+      gsap.to(line, {
+        strokeDashoffset: 0,
+        duration: 1,
+        delay: 0.6 + i * 0.04,
+        ease: 'power2.out'
+      });
+    });
+
+    // Animate nodes
+    gsap.from(graphNodes, {
+      scale: 0, opacity: 0, stagger: 0.04, duration: 0.4,
+      ease: 'back.out(2)', delay: 0.8,
+      transformOrigin: 'center center'
+    });
+
+    // Labels
+    gsap.to(nodeLabels, { opacity: 1, stagger: 0.05, duration: 0.4, delay: 1.5 });
+
+    // Central node
+    gsap.to(centralNode, { opacity: 1, duration: 0.6, delay: 1.2, ease: 'power3.out' });
+  }
+
+  // ScrollTrigger reveals
+  gsap.utils.toArray('.reveal-up').forEach((el: any) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+      y: 40, opacity: 0, duration: 0.8, ease: 'power3.out'
+    });
+  });
+
+  gsap.utils.toArray('.reveal-stagger').forEach((container: any) => {
+    gsap.from(container.children, {
+      scrollTrigger: { trigger: container, start: 'top 85%' },
+      y: 40, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out'
+    });
+  });
+
+  // Count-up
+  gsap.utils.toArray('.count-up').forEach((el: any) => {
+    const target = parseInt(el.dataset.target);
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      scrollTrigger: { trigger: el, start: 'top 90%' },
+      val: target, duration: 2, ease: 'power2.out',
+      onUpdate: function() { el.textContent = Math.round(obj.val); }
+    });
+  });
+</script>

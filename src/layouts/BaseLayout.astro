@@ -1,0 +1,105 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  robots?: string;
+  activePage?: string;
+  jsonLd?: object | object[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = 'https://www.eclipxia.com/og-image.png',
+  robots = 'index, follow',
+  activePage = '',
+  jsonLd,
+} = Astro.props;
+
+const canonicalUrl = canonical ?? Astro.url.href;
+---
+
+<!doctype html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#09090b" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="es_LA" />
+    <meta property="og:site_name" content="Eclipxia" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Structured Data -->
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logos/logo-blanco.png" />
+  </head>
+  <body class="bg-zinc-950 text-zinc-50 antialiased overflow-x-hidden">
+    <!-- Cursor glow -->
+    <div
+      id="cursor-glow"
+      class="fixed w-96 h-96 rounded-full pointer-events-none blur-3xl z-0 -translate-x-1/2 -translate-y-1/2 top-0 left-0"
+      style="background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%)"
+    ></div>
+
+    <Header activePage={activePage} />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <!-- Vercel Analytics & Speed Insights injected at runtime -->
+    <script>
+      // Vercel Analytics
+      if (typeof window !== 'undefined') {
+        import('@vercel/analytics').then(({ inject }) => inject && inject()).catch(() => {});
+        import('@vercel/speed-insights').then(({ injectSpeedInsights }) => injectSpeedInsights && injectSpeedInsights()).catch(() => {});
+      }
+    </script>
+
+    <script>
+      import gsap from 'gsap';
+
+      // Cursor glow tracking
+      const glow = document.getElementById('cursor-glow');
+      if (glow) {
+        document.addEventListener('mousemove', (e) => {
+          gsap.to(glow, {
+            left: e.clientX,
+            top: e.clientY,
+            duration: 0.8,
+            ease: 'power2.out',
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
