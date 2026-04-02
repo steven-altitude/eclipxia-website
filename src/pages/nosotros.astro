@@ -40,10 +40,63 @@ const jsonLd = {
             <span class="hero-word"><span class="text-cyan-400">presenta.</span></span>
           </h1>
         </div>
-        <!-- Dot Grid Visual -->
+        <!-- Data flow SVG -->
         <div class="hidden lg:block">
-          <div id="dot-grid" class="dot-grid w-full max-w-xs ml-auto"></div>
-          <p class="text-xs text-zinc-600 mt-4 text-right">El conocimiento de su empresa, conectado.</p>
+          <svg id="data-flow" viewBox="0 0 360 400" class="w-full max-w-xs ml-auto" aria-hidden="true">
+            <defs>
+              <filter id="df-glow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <!-- Spoke lines from center to each source node -->
+            <g id="df-lines">
+              <line x1="180" y1="200" x2="180" y2="55"  stroke="#3f3f46" stroke-width="1"/>
+              <line x1="180" y1="200" x2="306" y2="128" stroke="#3f3f46" stroke-width="1"/>
+              <line x1="180" y1="200" x2="306" y2="273" stroke="#3f3f46" stroke-width="1"/>
+              <line x1="180" y1="200" x2="180" y2="345" stroke="#3f3f46" stroke-width="1"/>
+              <line x1="180" y1="200" x2="54"  y2="273" stroke="#3f3f46" stroke-width="1"/>
+              <line x1="180" y1="200" x2="54"  y2="128" stroke="#3f3f46" stroke-width="1"/>
+            </g>
+            <!-- Source nodes (hexagonal layout, radius 145 from center 180,200) -->
+            <g id="df-nodes">
+              <g class="df-node">
+                <circle cx="180" cy="55"  r="9" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+                <text x="180" y="37" text-anchor="middle" fill="#71717a" font-size="9.5" font-family="Satoshi, sans-serif">Documentos</text>
+              </g>
+              <g class="df-node">
+                <circle cx="306" cy="128" r="9" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+                <text x="322" y="132" text-anchor="start" fill="#71717a" font-size="9.5" font-family="Satoshi, sans-serif">Legal</text>
+              </g>
+              <g class="df-node">
+                <circle cx="306" cy="273" r="9" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+                <text x="322" y="277" text-anchor="start" fill="#71717a" font-size="9.5" font-family="Satoshi, sans-serif">Finanzas</text>
+              </g>
+              <g class="df-node">
+                <circle cx="180" cy="345" r="9" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+                <text x="180" y="363" text-anchor="middle" fill="#71717a" font-size="9.5" font-family="Satoshi, sans-serif">RRHH</text>
+              </g>
+              <g class="df-node">
+                <circle cx="54" cy="273"  r="9" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+                <text x="38" y="277" text-anchor="end" fill="#71717a" font-size="9.5" font-family="Satoshi, sans-serif">Contratos</text>
+              </g>
+              <g class="df-node">
+                <circle cx="54" cy="128"  r="9" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+                <text x="38" y="132" text-anchor="end" fill="#71717a" font-size="9.5" font-family="Satoshi, sans-serif">Procesos</text>
+              </g>
+            </g>
+            <!-- Central IA node -->
+            <g id="df-center" opacity="0">
+              <circle id="df-ring-1" cx="180" cy="200" r="32" fill="none" stroke="#00D4FF" stroke-width="1.5" opacity="0"/>
+              <circle id="df-ring-2" cx="180" cy="200" r="32" fill="none" stroke="#00D4FF" stroke-width="1"   opacity="0"/>
+              <circle cx="180" cy="200" r="32" fill="#00D4FF08" stroke="#00D4FF25" stroke-width="1.5"/>
+              <circle cx="180" cy="200" r="22" fill="#00D4FF" filter="url(#df-glow)"/>
+              <text x="180" y="204" text-anchor="middle" fill="#09090b" font-size="10" font-weight="700" font-family="Satoshi, sans-serif">IA</text>
+            </g>
+            <!-- Particles container -->
+            <g id="df-particles"></g>
+          </svg>
+          <p class="text-xs text-zinc-600 mt-4 text-right">Sus datos, fluyendo hacia la IA.</p>
         </div>
       </div>
     </div>
@@ -160,24 +213,71 @@ const jsonLd = {
   gsap.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 });
   gsap.from('.hero-word', { y: 60, opacity: 0, stagger: 0.06, duration: 0.8, ease: 'power4.out', delay: 0.35 });
 
-  // Dot grid
-  const dotGrid = document.getElementById('dot-grid');
-  if (dotGrid) {
-    const totalDots = 64;
-    const litIndices = new Set<number>();
-    while (litIndices.size < 43) {
-      litIndices.add(Math.floor(Math.random() * totalDots));
-    }
-    for (let i = 0; i < totalDots; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'dot' + (litIndices.has(i) ? ' lit' : '');
-      if (litIndices.has(i)) {
-        dot.style.animationDelay = Math.random() * 3 + 's';
-        dot.classList.add('dot-active');
+  // Data flow SVG
+  const dfLineEls = document.querySelectorAll('#df-lines line');
+  const dfNodeCircles = document.querySelectorAll('#df-nodes circle');
+  const dfNodeTexts = document.querySelectorAll('#df-nodes text');
+  const dfCenter = document.getElementById('df-center');
+
+  gsap.set(dfNodeTexts, { opacity: 0 });
+
+  // Draw spokes outward from center
+  dfLineEls.forEach((line, i) => {
+    const x2 = Number((line as SVGLineElement).getAttribute('x2'));
+    const y2 = Number((line as SVGLineElement).getAttribute('y2'));
+    const len = Math.sqrt((x2 - 180) ** 2 + (y2 - 200) ** 2);
+    (line as SVGLineElement).style.strokeDasharray = String(len);
+    (line as SVGLineElement).style.strokeDashoffset = String(len);
+    gsap.to(line, { strokeDashoffset: 0, duration: 0.9, delay: 0.4 + i * 0.08, ease: 'power2.out' });
+  });
+
+  // Source nodes appear
+  gsap.from(dfNodeCircles, { opacity: 0, y: 6, stagger: 0.1, duration: 0.5, ease: 'power3.out', delay: 0.5 });
+  gsap.to(dfNodeTexts, { opacity: 1, stagger: 0.1, duration: 0.4, delay: 1.2 });
+
+  if (dfCenter) {
+    gsap.to(dfCenter, { opacity: 1, duration: 0.6, delay: 1.5 });
+
+    // Expanding pulse rings
+    gsap.fromTo('#df-ring-1',
+      { attr: { r: 32 }, opacity: 0.8 },
+      { attr: { r: 85 }, opacity: 0, duration: 2.5, repeat: -1, ease: 'power2.out', delay: 2.0 }
+    );
+    gsap.fromTo('#df-ring-2',
+      { attr: { r: 32 }, opacity: 0.5 },
+      { attr: { r: 85 }, opacity: 0, duration: 2.5, repeat: -1, ease: 'power2.out', delay: 3.25 }
+    );
+
+    // Inward particles: source nodes → IA
+    const srcCoords: [number, number][] = [
+      [180, 55], [306, 128], [306, 273], [180, 345], [54, 273], [54, 128]
+    ];
+    const dfParticlesGroup = document.getElementById('df-particles');
+    const srcNodes = Array.from(dfNodeCircles) as SVGCircleElement[];
+
+    srcCoords.forEach(([sx, sy], i) => {
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      p.setAttribute('r', '3');
+      p.setAttribute('fill', '#00D4FF');
+      p.setAttribute('filter', 'url(#df-glow)');
+      p.setAttribute('opacity', '0');
+      dfParticlesGroup?.appendChild(p);
+      function shoot() {
+        gsap.timeline({ onComplete: () => gsap.delayedCall(1.5 + Math.random() * 3.5, shoot) })
+          .set(p, { attr: { cx: sx, cy: sy }, opacity: 0 })
+          .to(p, { attr: { cx: 180, cy: 200 }, opacity: 0.85, duration: 1.3, ease: 'power1.in' })
+          .to(p, { opacity: 0, duration: 0.2 }, '-=0.2');
       }
-      dotGrid.appendChild(dot);
-    }
-    gsap.from('.dot', { scale: 0, opacity: 0, stagger: 0.02, duration: 0.4, ease: 'back.out(2)', delay: 0.6 });
+      gsap.delayedCall(2.2 + i * 0.35, shoot);
+    });
+
+    // Random source node flash
+    setInterval(() => {
+      const node = srcNodes[Math.floor(Math.random() * srcNodes.length)];
+      gsap.timeline()
+        .to(node, { attr: { fill: '#00D4FF', r: 11 }, duration: 0.25, ease: 'power2.out' })
+        .to(node, { attr: { fill: '#27272a', r: 9 }, duration: 0.5, ease: 'power2.inOut' });
+    }, 900);
   }
 
   // ScrollTrigger reveals
