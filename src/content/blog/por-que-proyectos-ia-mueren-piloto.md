@@ -1,6 +1,6 @@
 ---
 title: "Por qué el 80% de los proyectos de IA corporativa mueren en fase piloto"
-description: "Después de revisar más de 30 proyectos fallidos, el patrón es siempre el mismo. Aquí está el diagnóstico y la solución."
+description: "El patrón es consistente en la industria: los pilotos funcionan, la producción falla. Aquí está el diagnóstico y la solución."
 pubDate: 2026-03-15
 author: "Equipo Eclipxia"
 category: "Estrategia Enterprise"
@@ -8,7 +8,7 @@ image: "https://picsum.photos/seed/aipilot/1200/630"
 featured: true
 ---
 
-Después de revisar más de 30 proyectos de IA que no llegaron a producción, el patrón es siempre el mismo: el piloto funciona en condiciones controladas, con datos limpios y sin integraciones reales. Cuando llega el momento de conectar el sistema a la infraestructura existente de la empresa, la arquitectura no aguanta.
+Analizando el patrón que se repite consistentemente en la industria — y que vemos en cada conversación con directores de tecnología — el problema es siempre el mismo: el piloto funciona en condiciones controladas, con datos limpios y sin integraciones reales. Cuando llega el momento de conectar el sistema a la infraestructura existente de la empresa, la arquitectura no aguanta.
 
 El problema nunca fue la IA — fue que nadie diseñó el puente desde el principio.
 
