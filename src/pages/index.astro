@@ -225,35 +225,9 @@ const year = new Date().getFullYear();
           <p class="eyebrow">Contacto</p>
           <h2>Hablemos de tu empresa.</h2>
           <p>Cuéntanos qué proceso quieres mejorar y te respondemos con una propuesta concreta.</p>
-
-          <form class="contact-form" data-contact-form>
-            <input type="hidden" name="access_key" value="93d0bd54-263a-4f7f-bf9d-31d33359ddbb" />
-            <input type="hidden" name="subject" value="Nuevo mensaje desde eclipxia.com" />
-            <input type="hidden" name="from_name" value="Web Eclipxia" />
-            <input type="checkbox" name="botcheck" class="cf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-
-            <div class="cf-row">
-              <div class="cf-field">
-                <label for="cf-name">Nombre</label>
-                <input id="cf-name" name="name" type="text" required autocomplete="name" />
-              </div>
-              <div class="cf-field">
-                <label for="cf-email">Email</label>
-                <input id="cf-email" name="email" type="email" required autocomplete="email" />
-              </div>
-            </div>
-            <div class="cf-field">
-              <label for="cf-company">Empresa</label>
-              <input id="cf-company" name="empresa" type="text" autocomplete="organization" />
-            </div>
-            <div class="cf-field">
-              <label for="cf-message">¿Qué proceso quieres mejorar?</label>
-              <textarea id="cf-message" name="message" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn-pill-lg cf-submit">Enviar mensaje</button>
-            <p class="cf-status" data-form-status aria-live="polite"></p>
-            <p class="cf-alt">O escríbenos directo a <a href={MAILTO}>hola@eclipxia.com</a></p>
-          </form>
+          <div class="hero-cta">
+            <a href={MAILTO} class="btn-pill-lg">Escribir a hola@eclipxia.com</a>
+          </div>
         </div>
       </div>
     </section>
@@ -514,55 +488,4 @@ const year = new Date().getFullYear();
 
   initRing(document.querySelector('[data-ring]'), true);
   initRing(document.querySelector('[data-ring2]'), false);
-
-  // ---- Contact form (Web3Forms) ----
-  const form = document.querySelector('[data-contact-form]') as HTMLFormElement | null;
-  const status = document.querySelector('[data-form-status]') as HTMLElement | null;
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('.cf-submit') as HTMLButtonElement | null;
-      const data: Record<string, any> = Object.fromEntries(new FormData(form).entries());
-      if (data.botcheck) return; // honeypot tripped
-      const original = btn ? btn.textContent : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Enviando...';
-      }
-      if (status) {
-        status.textContent = '';
-        status.className = 'cf-status';
-      }
-      try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(data),
-        });
-        const json = await res.json();
-        if (json.success) {
-          form.reset();
-          if (status) {
-            status.textContent = 'Gracias. Recibimos tu mensaje y te respondemos pronto.';
-            status.classList.add('ok');
-          }
-        } else {
-          if (status) {
-            status.textContent = 'No se pudo enviar. Intenta de nuevo o escríbenos a hola@eclipxia.com.';
-            status.classList.add('err');
-          }
-        }
-      } catch {
-        if (status) {
-          status.textContent = 'No se pudo enviar. Revisa tu conexión o escríbenos a hola@eclipxia.com.';
-          status.classList.add('err');
-        }
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = original;
-        }
-      }
-    });
-  }
 </script>
