@@ -11,53 +11,112 @@ export interface Props {
 }
 
 const {
-  title = 'Eclipxia — Consultoría e ingeniería de IA',
-  description = 'No somos una agencia de desarrollo. Diagnosticamos, diseñamos e implementamos soluciones de IA que reducen costos y resuelven, en semanas, los problemas que frenan a las grandes organizaciones.',
+  title = 'Inteligencia Artificial para Empresas en Ecuador | Eclipxia',
+  description = 'Consultora de inteligencia artificial para empresas en Ecuador. Implementamos soluciones de IA que reducen costos y resuelven problemas reales en semanas.',
   canonical = 'https://www.eclipxia.com/',
   ogImage = 'https://www.eclipxia.com/eclipxia-logo.png',
 } = Astro.props;
 
+const keywords = [
+  'inteligencia artificial Ecuador',
+  'consultoría de inteligencia artificial Ecuador',
+  'IA para empresas Ecuador',
+  'consultora de IA Guayaquil',
+  'automatización con inteligencia artificial',
+  'capacitación en IA empresas',
+  'agencia de inteligencia artificial Ecuador',
+  'Eclipxia',
+].join(', ');
+
+const serviceCatalog: [string, string][] = [
+  ['Consultoría y diagnóstico de inteligencia artificial', 'Auditoría de procesos, casos de uso priorizados y hoja de ruta de IA aterrizada a tu negocio.'],
+  ['Capacitación de equipos en IA', 'Talleres prácticos y guías para que tu equipo use inteligencia artificial en su trabajo real.'],
+  ['Cerebros corporativos (asistentes con IA)', 'Asistente interno conectado a tus documentos, contratos, políticas y sistemas.'],
+  ['Automatización de flujos con IA', 'Eliminamos el trabajo manual repetitivo e integramos tus herramientas.'],
+  ['Plataformas a medida con IA', 'Portales de clientes y paneles internos con inteligencia artificial integrada.'],
+];
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
+  '@id': 'https://www.eclipxia.com/#organization',
   name: 'Eclipxia',
+  alternateName: 'Eclipxia — Consultoría de Inteligencia Artificial',
   description,
   url: 'https://www.eclipxia.com/',
+  image: ogImage,
+  logo: ogImage,
   email: 'hola@eclipxia.com',
-  areaServed: 'EC',
+  slogan: 'Inteligencia artificial que mueve a tu empresa.',
+  priceRange: '$$',
+  inLanguage: 'es-EC',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Edificio Xima, Piso 2, Oficina 218',
     addressLocality: 'Samborondón',
+    addressRegion: 'Guayas',
     addressCountry: 'EC',
   },
-  knowsAbout: [
-    'Consultoría de inteligencia artificial',
-    'Automatización de procesos',
-    'Capacitación en IA',
-    'Desarrollo de plataformas a medida',
+  geo: { '@type': 'GeoCoordinates', latitude: -2.1333, longitude: -79.8833 },
+  areaServed: [
+    { '@type': 'Country', name: 'Ecuador' },
+    { '@type': 'City', name: 'Guayaquil' },
+    { '@type': 'City', name: 'Samborondón' },
+    { '@type': 'City', name: 'Quito' },
   ],
+  knowsAbout: [
+    'Inteligencia artificial',
+    'Consultoría de IA',
+    'Automatización de procesos con IA',
+    'Capacitación en inteligencia artificial',
+    'Desarrollo de software con IA',
+    'Asistentes corporativos (RAG)',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios de inteligencia artificial en Ecuador',
+    itemListElement: serviceCatalog.map(([name, desc]) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name,
+        description: desc,
+        areaServed: 'Ecuador',
+        provider: { '@id': 'https://www.eclipxia.com/#organization' },
+      },
+    })),
+  },
 };
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-EC">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Eclipxia" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Local / geo signals -->
+    <meta name="geo.region" content="EC-G" />
+    <meta name="geo.placename" content="Samborondón, Guayas, Ecuador" />
+    <meta name="geo.position" content="-2.1333;-79.8833" />
+    <meta name="ICBM" content="-2.1333, -79.8833" />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content="es_EC" />
     <meta property="og:site_name" content="Eclipxia" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Eclipxia — Inteligencia artificial para empresas en Ecuador" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
