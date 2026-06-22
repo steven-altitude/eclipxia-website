@@ -1,105 +1,86 @@
 ---
 import '../styles/global.css';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
-interface Props {
-  title: string;
-  description: string;
+export interface Props {
+  title?: string;
+  description?: string;
   canonical?: string;
   ogImage?: string;
-  robots?: string;
-  activePage?: string;
-  jsonLd?: object | object[];
 }
 
 const {
-  title,
-  description,
-  canonical,
-  ogImage = 'https://www.eclipxia.com/og-image.png',
-  robots = 'index, follow',
-  activePage = '',
-  jsonLd,
+  title = 'Eclipxia — Consultoría e ingeniería de IA',
+  description = 'No somos una agencia de desarrollo. Diagnosticamos, diseñamos e implementamos soluciones de IA que reducen costos y resuelven, en semanas, los problemas que frenan a las grandes organizaciones.',
+  canonical = 'https://www.eclipxia.com/',
+  ogImage = 'https://www.eclipxia.com/eclipxia-logo.png',
 } = Astro.props;
 
-const canonicalUrl = canonical ?? Astro.url.href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Eclipxia',
+  description,
+  url: 'https://www.eclipxia.com/',
+  email: 'hola@eclipxia.com',
+  areaServed: 'EC',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Edificio Xima, Piso 2, Oficina 218',
+    addressLocality: 'Samborondón',
+    addressCountry: 'EC',
+  },
+  knowsAbout: [
+    'Consultoría de inteligencia artificial',
+    'Automatización de procesos',
+    'Capacitación en IA',
+    'Desarrollo de plataformas a medida',
+  ],
+};
 ---
 
-<!doctype html>
-<html lang="es" class="dark">
+<!DOCTYPE html>
+<html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#09090b" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content={robots} />
-    <link rel="canonical" href={canonicalUrl} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Eclipxia" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="es_LA" />
-    <meta property="og:site_name" content="Eclipxia" />
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Structured Data -->
-    {jsonLd && (
-      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    )}
+    <!-- Fonts: Geist + Geist Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/logos/logo-blanco.png" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Enable progressive-enhancement reveal only when JS is available -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
-  <body class="bg-zinc-950 text-zinc-50 antialiased overflow-x-hidden">
-    <!-- Cursor glow -->
-    <div
-      id="cursor-glow"
-      class="fixed w-96 h-96 rounded-full pointer-events-none blur-3xl z-0 -translate-x-1/2 -translate-y-1/2 top-0 left-0"
-      style="background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%)"
-    ></div>
-
-    <Header activePage={activePage} />
-
-    <main>
-      <slot />
-    </main>
-
-    <Footer />
-
-    <!-- Vercel Analytics & Speed Insights injected at runtime -->
-    <script>
-      // Vercel Analytics
-      if (typeof window !== 'undefined') {
-        import('@vercel/analytics').then(({ inject }) => inject && inject()).catch(() => {});
-        import('@vercel/speed-insights').then(({ injectSpeedInsights }) => injectSpeedInsights && injectSpeedInsights()).catch(() => {});
-      }
-    </script>
-
-    <script>
-      import gsap from 'gsap';
-
-      // Cursor glow tracking
-      const glow = document.getElementById('cursor-glow');
-      if (glow) {
-        document.addEventListener('mousemove', (e) => {
-          gsap.to(glow, {
-            left: e.clientX,
-            top: e.clientY,
-            duration: 0.8,
-            ease: 'power2.out',
-          });
-        });
-      }
-    </script>
+  <body>
+    <slot />
+    <Analytics />
+    <SpeedInsights />
   </body>
 </html>
