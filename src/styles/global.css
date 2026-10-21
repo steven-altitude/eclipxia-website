@@ -75,6 +75,15 @@ img { display: block; }
 }
 .btn-pill-lg:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,.5); }
 
+.btn-pill-ghost {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: transparent; color: #F2F2F4; font-size: 15px; font-weight: 500;
+  padding: 15px 30px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
+}
+.btn-pill-ghost:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.42); background: rgba(255,255,255,.05); }
+
 /* ============================================================
    NAV
    ============================================================ */
@@ -293,6 +302,12 @@ img { display: block; }
 .contact-content h2 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.03; letter-spacing: -.03em; font-weight: 500; max-width: 16ch; color: #F6F6F8; }
 .contact-content p { margin-top: 24px; font-size: 1.18rem; line-height: 1.55; color: #9D9DA6; max-width: 50ch; }
 .contact-content .hero-cta { margin-top: 38px; }
+.contact-content .contact-phone {
+  margin-top: 22px; font-size: 14px; line-height: 1;
+  font-family: 'Geist Mono', monospace; letter-spacing: .08em; color: #7A7A84;
+}
+.contact-content .contact-phone a { color: #C8C8CE; transition: color .2s ease; }
+.contact-content .contact-phone a:hover { color: #F6F6F8; }
 
 /* ============================================================
    FOOTER
@@ -316,6 +331,24 @@ img { display: block; }
   font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: .08em;
   text-transform: uppercase; color: #5A5A62;
 }
+
+/* ============================================================
+   WHATSAPP — botón flotante (contacto principal)
+   Debajo del nav (50) y del menú móvil (49), sobre el grano (45).
+   ============================================================ */
+.wa-fab {
+  position: fixed; right: 24px; bottom: 24px; z-index: 48;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 19px; border-radius: 999px;
+  background: #F2F2F4; color: #121317;
+  font-size: 14px; font-weight: 500; line-height: 1;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+  transition: transform .2s ease, box-shadow .2s ease;
+  animation: ecl-rise .7s ease 1s both;
+}
+.wa-fab:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.55); }
+.wa-fab:focus-visible { outline: 2px solid #F2F2F4; outline-offset: 3px; }
+.wa-fab-icon { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
 
 /* ============================================================
    SCROLL REVEAL (progressive enhancement)
@@ -352,6 +385,9 @@ img { display: block; }
   .footer-top { padding: 44px 22px; }
   .footer-bottom-inner { padding: 18px 22px; }
   .svc-grid { grid-template-columns: 1fr; }
+  .wa-fab { right: 16px; bottom: 16px; padding: 15px; border-radius: 50%; }
+  .wa-fab-label { display: none; }
+  .wa-fab-icon { width: 24px; height: 24px; }
 }
 
 @media (max-width: 420px) {
