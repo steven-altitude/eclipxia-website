@@ -14,5 +14,8 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "astro": "^5.17.1"
+  },
+  "engines": {
+    "node": ">=24.22.1"
   }
 }
