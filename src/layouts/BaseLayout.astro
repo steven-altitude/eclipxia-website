@@ -121,6 +121,7 @@ const jsonLd = {
     <meta name="keywords" content={keywords} />
     <meta name="author" content="Eclipxia" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="google-site-verification" content="ahqm2V5tqRV9NV5XVrZWuiNnZXwyeLYJnfH2QJK8IPU" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -158,6 +159,30 @@ const jsonLd = {
     <!-- Enable progressive-enhancement reveal only when JS is available -->
     <script is:inline>
       document.documentElement.classList.add('js');
+    </script>
+
+    <!-- Google Analytics 4 (G-KL1KTP4N6K), carga diferida: primera interacción o 3,5 s -->
+    <script is:inline>
+      (function () {
+        var GA_ID = 'G-KL1KTP4N6K';
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', GA_ID);
+        var loaded = false;
+        function loadGtag() {
+          if (loaded) return;
+          loaded = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(s);
+        }
+        setTimeout(loadGtag, 3500);
+        ['scroll', 'click', 'touchstart', 'keydown'].forEach(function (e) {
+          window.addEventListener(e, loadGtag, { once: true, passive: true });
+        });
+      })();
     </script>
   </head>
   <body>
