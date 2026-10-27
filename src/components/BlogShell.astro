@@ -1,0 +1,47 @@
+---
+// Marco de las paginas del blog: nav fija y footer con el mismo lenguaje del
+// landing. El landing es una sola pagina con anclas, asi que aqui los enlaces
+// apuntan a /#seccion.
+import { PHONE_DISPLAY, WHATSAPP_URL } from '../layouts/BaseLayout.astro';
+
+const year = new Date().getFullYear();
+---
+
+<div class="page blog-page">
+  <div aria-hidden="true" class="grain"></div>
+
+  <nav class="nav scrolled blog-nav">
+    <a href="/" class="nav-logo" aria-label="Eclipxia inicio">
+      <img src="/eclipxia-logo.png" alt="Eclipxia" />
+    </a>
+    <div class="blog-nav-links">
+      <a href="/#servicios" class="nav-link blog-nav-hide">Servicios</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href={WHATSAPP_URL} class="btn-pill" target="_blank" rel="noopener noreferrer">Contactar</a>
+    </div>
+  </nav>
+
+  <main class="blog-main">
+    <slot />
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/eclipxia-logo.png" alt="Eclipxia — Inteligencia artificial para empresas en Ecuador" />
+        <p>Inteligencia artificial aplicada a los problemas reales de tu empresa.</p>
+      </div>
+      <div class="footer-meta">
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">WhatsApp {PHONE_DISPLAY}</a>
+        <a href="mailto:hola@eclipxia.com">hola@eclipxia.com</a>
+        <p>Edificio Xima. Piso 2. Oficina 218.<br />Samborondón, Ecuador.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span>&copy; {year} Eclipxia</span>
+        <span>Inteligencia artificial para empresas</span>
+      </div>
+    </div>
+  </footer>
+</div>

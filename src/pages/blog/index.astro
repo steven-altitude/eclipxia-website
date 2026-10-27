@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogShell from '../../components/BlogShell.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('es-EC', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+
+<BaseLayout
+  title="Blog de inteligencia artificial para empresas | Eclipxia"
+  description="Guías prácticas sobre agentes de IA, cerebros corporativos, RAG y automatización para empresas en Ecuador. Sin humo: qué funciona, cuánto cuesta y cómo empezar."
+  canonical="https://www.eclipxia.com/blog/"
+>
+  <BlogShell>
+    <header class="blog-hero">
+      <p class="eyebrow">Blog</p>
+      <h1 class="blog-h1">Inteligencia artificial aplicada, sin humo.</h1>
+      <p class="blog-lede">
+        Qué funciona de verdad en una empresa: agentes de IA, asistentes conectados a tus documentos y automatización de procesos. Explicado para quien decide, no para quien programa.
+      </p>
+    </header>
+
+    {posts.length === 0 ? (
+      <p class="blog-empty">Muy pronto, los primeros artículos.</p>
+    ) : (
+      <ul class="blog-list">
+        {posts.map((post) => (
+          <li>
+            <a class="blog-card" href={`/blog/${post.id}/`}>
+              <span class="blog-card-meta">
+                <span>{post.data.category}</span>
+                <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+              </span>
+              <span class="blog-card-title">{post.data.title}</span>
+              <span class="blog-card-desc">{post.data.description}</span>
+              <span class="blog-card-more" aria-hidden="true">Leer artículo &rarr;</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </BlogShell>
+</BaseLayout>

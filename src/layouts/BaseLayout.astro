@@ -8,6 +8,9 @@ export interface Props {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  ogType?: 'website' | 'article';
+  /** JSON-LD adicional de la pagina (ej. BlogPosting en el blog) */
+  jsonLd?: object | object[];
 }
 
 const {
@@ -15,7 +18,10 @@ const {
   description = 'Consultora de inteligencia artificial para empresas en Ecuador. Implementamos soluciones de IA que reducen costos y resuelven problemas reales en semanas.',
   canonical = 'https://www.eclipxia.com/',
   ogImage = 'https://www.eclipxia.com/eclipxia-logo.png',
+  ogType = 'website',
+  jsonLd: pageJsonLd,
 } = Astro.props;
+const extraLd = pageJsonLd ? (Array.isArray(pageJsonLd) ? pageJsonLd : [pageJsonLd]) : [];
 
 // Punto de contacto principal: WhatsApp.
 export const PHONE_E164 = '+593985479274';
@@ -125,7 +131,7 @@ const jsonLd = {
     <meta name="ICBM" content="-2.1333, -79.8833" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:locale" content="es_EC" />
     <meta property="og:site_name" content="Eclipxia" />
     <meta property="og:title" content={title} />
@@ -147,6 +153,7 @@ const jsonLd = {
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {extraLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
 
     <!-- Enable progressive-enhancement reveal only when JS is available -->
     <script is:inline>

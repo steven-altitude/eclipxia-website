@@ -1,5 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout, { PHONE_DISPLAY, WHATSAPP_URL } from '../layouts/BaseLayout.astro';
+
+// El enlace al blog aparece solo cuando hay al menos un articulo publicado.
+const hasBlog = (await getCollection('blog', ({ data }) => !data.draft)).length > 0;
 
 const MAILTO = 'mailto:hola@eclipxia.com?subject=Consulta%20%E2%80%94%20Eclipxia';
 const MAILTO_DIAG = 'mailto:hola@eclipxia.com?subject=Diagn%C3%B3stico%20%E2%80%94%20Eclipxia';
@@ -81,6 +85,7 @@ const year = new Date().getFullYear();
         <a href="#servicios" class="nav-link">Servicios</a>
         <a href="#proceso" class="nav-link">Proceso</a>
         <a href="#nosotros" class="nav-link">Nosotros</a>
+        {hasBlog && <a href="/blog/" class="nav-link">Blog</a>}
         <a href={WHATSAPP_URL} class="btn-pill" target="_blank" rel="noopener noreferrer">Contactar</a>
       </div>
       <button type="button" class="nav-burger" data-menu-open aria-label="Abrir menú">
@@ -93,6 +98,7 @@ const year = new Date().getFullYear();
       <a href="#servicios" data-menu-link>Servicios</a>
       <a href="#proceso" data-menu-link>Proceso</a>
       <a href="#nosotros" data-menu-link>Nosotros</a>
+      {hasBlog && <a href="/blog/" data-menu-link>Blog</a>}
       <a href="#contacto" data-menu-link>Contacto</a>
       <a href={WHATSAPP_URL} class="mm-btn" target="_blank" rel="noopener noreferrer" data-menu-link>Contactar</a>
       <button type="button" class="mm-close" data-menu-close aria-label="Cerrar menú">&times;</button>
