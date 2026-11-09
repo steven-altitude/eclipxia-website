@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogShell from '../../components/BlogShell.astro';
+
+const casos = (await getCollection('casos', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Casos de éxito de inteligencia artificial en Ecuador | Eclipxia"
+  description="Proyectos reales de IA en empresas de Ecuador: plataformas a medida, asistentes con IA, automatización y capacitación. Problema, planteamiento y solución de cada caso."
+  canonical="https://www.eclipxia.com/casos/"
+>
+  <BlogShell>
+    <header class="blog-hero">
+      <p class="eyebrow">Casos de éxito</p>
+      <h1 class="blog-h1">Inteligencia artificial que ya está trabajando.</h1>
+      <p class="blog-lede">
+        Proyectos reales, contados en tres partes: el problema que había, cómo lo planteamos y lo que construimos. En todos, la IA hace la diferencia en cómo lo construimos y, donde aporta, en cómo lo usa el cliente cada día.
+      </p>
+    </header>
+
+    <ul class="case-list">
+      {casos.map((c) => (
+        <li>
+          <a class="case-card" href={`/casos/${c.id}/`}>
+            {c.data.image && (
+              <img class="case-card-img" src={c.data.image} alt={c.data.imageAlt ?? ''} loading="lazy" width="1600" height="1000" />
+            )}
+            <span class="blog-card-meta">
+              <span>{c.data.client}</span>
+              <span>{c.data.sector}</span>
+            </span>
+            <span class="blog-card-title">{c.data.title}</span>
+            <span class="blog-card-desc">{c.data.summary}</span>
+            {c.data.metrics.length > 0 && (
+              <span class="case-card-metrics">
+                {c.data.metrics.slice(0, 2).map((m) => (
+                  <span class="case-card-metric">
+                    <strong>{m.value}</strong>
+                    <span>{m.label}</span>
+                  </span>
+                ))}
+              </span>
+            )}
+            <span class="blog-card-more" aria-hidden="true">Ver el caso &rarr;</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </BlogShell>
+</BaseLayout>

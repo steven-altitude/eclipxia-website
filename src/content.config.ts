@@ -31,4 +31,34 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+// Casos de éxito. Cada caso es un .md en src/content/casos/ y su URL es
+// /casos/<nombre-del-archivo>/. El cuerpo SIEMPRE lleva tres secciones ##,
+// en este orden: "La problemática y el objetivo", "El planteamiento de
+// Eclipxia" y "La solución". La IA como diferenciador va en aiBuild/aiUse.
+const casos = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/casos' }),
+  schema: z.object({
+    // H1 visible del caso
+    title: z.string(),
+    seoTitle: z.string().optional(),
+    client: z.string(),
+    sector: z.string(),
+    // Resumen para el listado y meta description
+    summary: z.string(),
+    // Orden en el listado (menor primero)
+    order: z.number(),
+    services: z.array(z.string()).default([]),
+    // Cifras destacadas. Nunca montos de dinero del cliente.
+    metrics: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
+    // IA como diferenciador: cómo aceleró la construcción y cómo la usa el cliente
+    aiBuild: z.string(),
+    aiUse: z.string(),
+    // Aviso visible cuando el caso omite detalles por confidencialidad
+    note: z.string().optional(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, casos };

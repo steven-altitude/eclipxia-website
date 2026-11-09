@@ -5,6 +5,12 @@ import BaseLayout, { PHONE_DISPLAY, WHATSAPP_URL } from '../layouts/BaseLayout.a
 // El enlace al blog aparece solo cuando hay al menos un articulo publicado.
 const hasBlog = (await getCollection('blog', ({ data }) => !data.draft)).length > 0;
 
+// Casos de éxito: el home muestra los primeros cuatro; el resto vive en /casos/.
+const casos = (await getCollection('casos', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const hasCasos = casos.length > 0;
+
 const MAILTO = 'mailto:hola@eclipxia.com?subject=Consulta%20%E2%80%94%20Eclipxia';
 const MAILTO_DIAG = 'mailto:hola@eclipxia.com?subject=Diagn%C3%B3stico%20%E2%80%94%20Eclipxia';
 
@@ -83,6 +89,7 @@ const year = new Date().getFullYear();
       </a>
       <div class="nav-links">
         <a href="#servicios" class="nav-link">Servicios</a>
+        {hasCasos && <a href="/casos/" class="nav-link">Casos</a>}
         <a href="#proceso" class="nav-link">Proceso</a>
         <a href="#nosotros" class="nav-link">Nosotros</a>
         {hasBlog && <a href="/blog/" class="nav-link">Blog</a>}
@@ -96,6 +103,7 @@ const year = new Date().getFullYear();
     <!-- mobile menu overlay -->
     <div class="mobile-menu" data-mobile-menu>
       <a href="#servicios" data-menu-link>Servicios</a>
+      {hasCasos && <a href="/casos/" data-menu-link>Casos</a>}
       <a href="#proceso" data-menu-link>Proceso</a>
       <a href="#nosotros" data-menu-link>Nosotros</a>
       {hasBlog && <a href="/blog/" data-menu-link>Blog</a>}
@@ -178,6 +186,36 @@ const year = new Date().getFullYear();
     </section>
 
     <!-- ===================== PROCESO ===================== -->
+    {hasCasos && (
+      <section id="casos" class="home-cases" data-reveal>
+        <div class="home-cases-head">
+          <div>
+            <p class="eyebrow" style="margin-bottom:16px">Casos de éxito</p>
+            <h2 class="section-h2">IA que ya está trabajando en empresas reales.</h2>
+          </div>
+          <a href="/casos/" class="home-cases-link">Ver todos los casos &rarr;</a>
+        </div>
+        <ul class="case-list">
+          {casos.slice(0, 4).map((c) => (
+            <li data-reveal>
+              <a class="case-card" href={`/casos/${c.id}/`}>
+                {c.data.image && (
+                  <img class="case-card-img" src={c.data.image} alt={c.data.imageAlt ?? ''} loading="lazy" width="1600" height="1000" />
+                )}
+                <span class="blog-card-meta">
+                  <span>{c.data.client}</span>
+                  <span>{c.data.sector}</span>
+                </span>
+                <span class="blog-card-title">{c.data.title}</span>
+                <span class="blog-card-desc">{c.data.summary}</span>
+                <span class="blog-card-more" aria-hidden="true">Ver el caso &rarr;</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
     <section id="proceso" class="proceso" data-reveal>
       <div class="proceso-inner">
         <p class="eyebrow" style="margin-bottom:16px">Cómo trabajamos</p>
