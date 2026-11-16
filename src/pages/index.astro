@@ -15,60 +15,86 @@ const MAILTO = 'mailto:hola@eclipxia.com?subject=Consulta%20%E2%80%94%20Eclipxia
 const MAILTO_DIAG = 'mailto:hola@eclipxia.com?subject=Diagn%C3%B3stico%20%E2%80%94%20Eclipxia';
 
 const marqueePhrases = [
-  'Cerebros corporativos',
-  'Automatización de flujos',
-  'Portales de clientes',
-  'Capacitación de equipos',
-  'Diagnóstico de IA',
-  'Plataformas a medida',
+  'Cerebros corporativos privados',
+  'Agentes de operaciones',
+  'IA en tu propio servidor',
+  'Auditoría de facturas',
+  'Reportes en vivo',
+  'Calificación de prospectos',
 ];
 const marqueeLoop = [...marqueePhrases, ...marqueePhrases];
 
-const services = [
+// Los dos servicios principales: lo que vendemos primero y lo que debe quedar claro.
+const featured = [
   {
     num: '01',
-    title: 'Consultoría y diagnóstico de IA',
-    body: '¿Por dónde empezar con IA? Analizamos tus procesos y te decimos exactamente dónde ahorra tiempo y dinero, con un plan priorizado y aterrizado a tu negocio.',
-    meta: 'Entregamos · Auditoría de procesos · Casos de uso priorizados · Hoja de ruta',
+    title: 'Cerebro corporativo privado',
+    promise: 'Una IA que conoce tu empresa por dentro y vive en tu propio servidor.',
+    body: 'Le cargamos tus manuales, procedimientos, políticas, contratos, catálogos y bases de datos. Tu equipo pregunta en lenguaje normal y recibe la respuesta correcta al instante, sin buscar entre carpetas ni depender de la persona que "sabe cómo es".',
+    points: [
+      'Responde con tus documentos y tus datos, no con información genérica de internet.',
+      'Cada respuesta cita su fuente, para verificarla en un clic.',
+      'Permisos por cargo: cada persona consulta solo lo que le corresponde.',
+      'Se mantiene al día: lo actualizamos cada vez que cambia un proceso o un documento.',
+    ],
+    model: 'Implementación + mantenimiento mensual',
   },
   {
     num: '02',
-    title: 'Capacitación de equipos',
-    body: 'Entrenamos a tu equipo para usar IA en su trabajo real: redactar, analizar, atender clientes y decidir más rápido, con criterio y sin riesgos para tu información.',
-    meta: 'Entregamos · Talleres prácticos · Guías internas · Acompañamiento',
+    title: 'Agentes de IA para tu operación',
+    promise: 'IA que no solo responde: ejecuta procesos completos, de principio a fin.',
+    body: 'Conectamos el razonamiento de la IA con tus sistemas (ERP, CRM, correo, hojas de cálculo) para que los procesos administrativos de varios pasos avancen solos y tu equipo deje de perder horas en trabajo repetitivo.',
+    points: [
+      'Auditoría de facturas: cruza cada factura con la orden de compra y marca lo que no cuadra.',
+      'Ingreso de personal: documentos, accesos e inducción, con seguimiento automático.',
+      'Calificación de prospectos: analiza cada contacto y lo entrega al CRM con el contexto listo.',
+      'Reportes en vivo: gerencia pregunta y recibe el informe con datos del día.',
+    ],
+    model: 'Implementación + mantenimiento mensual',
   },
+];
+
+// Servicios de apoyo: preparan el terreno o completan los dos principales.
+const services = [
   {
     num: '03',
-    title: 'Cerebros corporativos',
-    body: 'Un asistente que conoce todo sobre tu empresa —manuales, contratos, políticas y datos—. Tu equipo pregunta en lenguaje normal y obtiene la respuesta correcta al instante.',
-    meta: 'Entregamos · Asistente interno · Conectado a tus documentos y sistemas',
+    title: 'Diagnóstico de IA',
+    body: 'Analizamos tus procesos y te decimos dónde la IA ahorra más tiempo y dinero, con un plan priorizado. Es el punto de partida recomendado.',
+    meta: 'Entregamos · Casos de uso priorizados · Hoja de ruta',
   },
   {
     num: '04',
-    title: 'Automatización de flujos',
-    body: 'Eliminamos el trabajo manual repetitivo —cotizaciones, reportes, respuestas, ingreso de datos— para que los procesos avancen solos y tu equipo se enfoque en lo importante.',
-    meta: 'Entregamos · Tareas automatizadas · Integración entre tus herramientas',
+    title: 'Capacitación de equipos',
+    body: 'Entrenamos a tu equipo para usar IA en su trabajo real, con criterio y sin exponer la información de la empresa.',
+    meta: 'Entregamos · Talleres prácticos · Guías internas',
   },
   {
     num: '05',
     title: 'Plataformas a medida',
-    body: 'Construimos el software que tu empresa necesita y aún no existe: portales de clientes, paneles internos y herramientas con IA integrada desde el primer día.',
-    meta: 'Entregamos · Portales de clientes · Paneles y plataformas internas',
+    body: 'Cuando la herramienta que necesitas no existe, la construimos: portales y paneles internos con IA integrada desde el primer día.',
+    meta: 'Entregamos · Portales · Paneles internos',
   },
+];
+
+const security = [
+  { title: 'En tu propio servidor', body: 'Instalamos la solución en tu nube o en un servidor privado dedicado. Tú decides dónde viven los datos.' },
+  { title: 'No entrena IA pública', body: 'Tus documentos y conversaciones no se usan para entrenar modelos de terceros. Siguen siendo tuyos.' },
+  { title: 'Acceso por cargo', body: 'Cada usuario consulta solo la información que su rol le permite. Lo confidencial se queda confidencial.' },
+  { title: 'Todo queda registrado', body: 'Cada consulta y cada acción de un agente deja rastro: sabes quién preguntó qué y qué hizo la IA.' },
 ];
 
 const process = [
   { num: '01', title: 'Diagnóstico', body: 'Entendemos tu operación e identificamos dónde la IA genera mayor retorno.' },
   { num: '02', title: 'Diseño', body: 'Definimos la solución, su alcance y los indicadores con los que mediremos el éxito.' },
-  { num: '03', title: 'Implementación', body: 'Construimos e integramos la solución con tus sistemas y tus equipos.' },
-  { num: '04', title: 'Acompañamiento', body: 'Medimos, ajustamos y escalamos lo que funciona dentro de tu organización.' },
+  { num: '03', title: 'Implementación', body: 'Instalamos la solución en tu infraestructura y la conectamos con tus sistemas y tus equipos.' },
+  { num: '04', title: 'Mantenimiento', body: 'Actualizamos su conocimiento, medimos, ajustamos y escalamos lo que funciona.' },
 ];
 
 const whyUs = [
   { title: 'Velocidad', body: 'Entregamos en semanas lo que un equipo interno tardaría meses en montar.' },
   { title: 'Costo', body: 'Resultados de nivel corporativo a una fracción de contratar y mantener el talento internamente.' },
   { title: 'Enfoque en el negocio', body: 'Hablamos de procesos y resultados, no de tecnología. La IA es el medio, nunca el fin.' },
-  { title: 'Tu información, segura', body: 'Trabajamos sobre tus propios datos con criterios estrictos de confidencialidad y control.' },
+  { title: 'Ya funciona en empresas reales', body: 'Nuestros sistemas están en producción en empresas de Ecuador. Puedes ver los casos.' },
 ];
 
 const year = new Date().getFullYear();
@@ -125,7 +151,7 @@ const year = new Date().getFullYear();
           Consultoría e ingeniería de IA · Ecuador
         </div>
         <h1 data-headline>Inteligencia artificial que mueve a tu empresa.</h1>
-        <p class="hero-sub">Diagnosticamos, diseñamos e implementamos soluciones de IA que reducen costos y resuelven, en semanas, los problemas que frenan a las grandes organizaciones.</p>
+        <p class="hero-sub">Construimos IA privada que conoce los documentos, procesos y datos de tu empresa, y agentes que ejecutan el trabajo operativo por tu equipo. Instalada en tu infraestructura, con tu información protegida.</p>
         <div class="hero-cta">
           <a href={WHATSAPP_URL} class="btn-pill-lg" target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp &rarr;</a>
           <a href={MAILTO} class="btn-pill-ghost">hola@eclipxia.com</a>
@@ -161,11 +187,27 @@ const year = new Date().getFullYear();
       <div class="svc-head">
         <div>
           <p class="eyebrow">Servicios</p>
-          <h2 class="section-h2">Todo lo que tu empresa necesita para operar con IA.</h2>
+          <h2 class="section-h2">IA privada que conoce tu empresa y trabaja en tu operación.</h2>
         </div>
-        <p class="svc-note">De la estrategia a la implementación. Un solo socio, de principio a fin.</p>
+        <p class="svc-note">Dos servicios principales, diseñados para empresas que no pueden arriesgar su información.</p>
       </div>
 
+      <div class="svc-featured">
+        {featured.map((f) => (
+          <article class="svc-feature" data-reveal>
+            <p class="svc-feature-label"><span class="svc-num">{f.num}</span> Servicio principal</p>
+            <h3>{f.title}</h3>
+            <p class="svc-feature-promise">{f.promise}</p>
+            <p class="svc-feature-body">{f.body}</p>
+            <ul class="svc-feature-points">
+              {f.points.map((pt) => <li>{pt}</li>)}
+            </ul>
+            <div class="svc-meta"><p>{f.model}</p></div>
+          </article>
+        ))}
+      </div>
+
+      <p class="eyebrow svc-sub-eyebrow">También hacemos</p>
       <div class="svc-grid">
         {services.map((s) => (
           <article class="svc-card" data-reveal>
@@ -182,6 +224,26 @@ const year = new Date().getFullYear();
           <p class="cta-q">¿No sabes por dónde empezar?</p>
           <a href={MAILTO_DIAG} class="svc-cta-link">Solicita un diagnóstico &rarr;</a>
         </article>
+      </div>
+    </section>
+
+    <!-- ===================== SEGURIDAD ===================== -->
+    <section id="seguridad" class="seguridad" data-reveal>
+      <div class="seguridad-inner">
+        <div class="seguridad-head">
+          <p class="eyebrow">Seguridad y privacidad</p>
+          <h2 class="section-h2">Tu información no sale de tu empresa.</h2>
+          <p class="svc-note">La primera pregunta de toda gerencia es dónde terminan sus datos. Diseñamos cada solución para que la respuesta sea simple: en tu casa.</p>
+        </div>
+        <div class="why-grid">
+          {security.map((w) => (
+            <div class="why-item" data-reveal>
+              <div class="rule"></div>
+              <h3>{w.title}</h3>
+              <p>{w.body}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
 
