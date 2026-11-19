@@ -186,6 +186,41 @@ const comercial = [
         <div class="sol-grid">
           {solucion.map(([t, d], i) => (
             <article class:list={['card', i === 0 && 'card-hi']} data-reveal style={`--i:${i + 2}`}>
+              {i === 0 && (
+                <svg class="priv-art" viewBox="0 0 400 230" role="img" aria-label="Servidor exclusivo dentro del perímetro de tu empresa, protegido con candado">
+                  <defs>
+                    <radialGradient id="pvGlow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0" stop-color="#3DDC97" stop-opacity=".22" />
+                      <stop offset="1" stop-color="#3DDC97" stop-opacity="0" />
+                    </radialGradient>
+                    <linearGradient id="pvSlab" x1="0" x2="1">
+                      <stop offset="0" stop-color="#23252d" />
+                      <stop offset="1" stop-color="#1a1b21" />
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="200" cy="118" rx="170" ry="100" fill="url(#pvGlow)" />
+                  <rect class="pv-perim" x="40" y="14" width="320" height="200" rx="22" fill="none" stroke="#3DDC97" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="6 7" />
+                  <text x="60" y="38" fill="#3DDC97" font-family="Geist Mono, monospace" font-size="10" letter-spacing="2">TU INFRAESTRUCTURA</text>
+                  <g transform="translate(130 58)">
+                    <rect width="140" height="34" rx="7" fill="url(#pvSlab)" stroke="#45464F" />
+                    <rect y="44" width="140" height="34" rx="7" fill="url(#pvSlab)" stroke="#45464F" />
+                    <rect y="88" width="140" height="34" rx="7" fill="url(#pvSlab)" stroke="#45464F" />
+                    <g fill="#5A5A62"><rect x="14" y="15" width="56" height="4" rx="2" /><rect x="14" y="59" width="56" height="4" rx="2" /><rect x="14" y="103" width="56" height="4" rx="2" /></g>
+                    <circle class="pv-led" cx="118" cy="17" r="4" fill="#3DDC97" />
+                    <circle class="pv-led d2" cx="118" cy="61" r="4" fill="#FFB547" />
+                    <circle class="pv-led d3" cx="118" cy="105" r="4" fill="#3DDC97" />
+                  </g>
+                  <g transform="translate(286 124)">
+                    <circle r="24" fill="#121317" stroke="#3DDC97" stroke-width="1.5" />
+                    <path d="M-8 -3 v-6 a8 8 0 0 1 16 0 v6" fill="none" stroke="#3DDC97" stroke-width="2.2" stroke-linecap="round" />
+                    <rect x="-11" y="-3" width="22" height="15" rx="3" fill="#3DDC97" />
+                  </g>
+                  <g class="pv-block" stroke="#FF5D5D" stroke-width="1.6" stroke-linecap="round">
+                    <path d="M4 118 H30" stroke-dasharray="3 4" />
+                    <path d="M32 112 l-8 12 M24 112 l8 12" />
+                  </g>
+                </svg>
+              )}
               <h3>{t}</h3>
               <p>{d}</p>
             </article>

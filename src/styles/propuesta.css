@@ -149,7 +149,7 @@ body { background: var(--bg); color: var(--txt); }
 /* ---------- Solucion ---------- */
 .sol-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px; margin-top: 56px; }
 .sol-grid .card:nth-child(4) { grid-column: 2 / 4; }
-.sol-grid .card:first-child { grid-row: span 2; display: flex; flex-direction: column; justify-content: flex-end; min-height: 260px; }
+.sol-grid .card:first-child { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; min-height: 260px; }
 .sol-grid .card:first-child h3 { font-size: 1.7rem; }
 
 /* ---------- Plataforma ---------- */
@@ -420,3 +420,13 @@ body { background: var(--bg); color: var(--txt); }
 .browser.phone { max-width: 260px; border-radius: 30px; padding: 8px; background: #0b0c10; }
 .browser.phone img { border-radius: 22px; aspect-ratio: auto; object-fit: contain; }
 
+
+/* Ilustración de la tarjeta "Privado" */
+.priv-art { display: block; width: 100%; height: auto; margin: -8px 0 18px; }
+.pv-led { animation: pvBlink 2.4s ease-in-out infinite; }
+.pv-led.d2 { animation-delay: .8s; }
+.pv-led.d3 { animation-delay: 1.6s; }
+.pv-block { animation: pvBlock 3.2s ease-in-out infinite; }
+@keyframes pvBlink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes pvBlock { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .pv-led, .pv-block { animation: none; } }

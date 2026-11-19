@@ -5,7 +5,7 @@ import { coronaMaterial, haloMaterial } from './shaders';
 const LUT = 48;
 const CLOUD_C = new THREE.Vector3(1.3, 0, 0);
 const NODE_P = new THREE.Vector3(5.1, 0.35, 0);
-const LOOP_SECONDS = 26; // animacion automatica y lenta, de ingesta a respuesta
+const LOOP_SECONDS = 14; // animacion automatica y lenta, de ingesta a respuesta
 
 const DOC_VERT = /* glsl */ `
   varying vec2 vUv;
