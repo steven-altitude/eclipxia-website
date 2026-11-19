@@ -30,6 +30,7 @@ const funciones = [
 
 const shots = {
   'Usuarios y permisos': { src: '/propuesta/cerebro-corporativo/grupos.png', w: 2400, h: 525, alt: 'Panel de grupos por área del cerebro corporativo: Comercial, Finanzas, Gerencia, Legal, Operaciones y RR.HH.' },
+  'Experiencia tipo ChatGPT': { src: '/propuesta/cerebro-corporativo/movil.png', w: 780, h: 1688, alt: 'El cerebro corporativo de Eclipxia en el celular, con una respuesta citada', phone: true },
   'Asistentes por departamento': { src: '/propuesta/cerebro-corporativo/cerebros.png', w: 2400, h: 428, alt: 'Lista de asistentes del cerebro corporativo: Cerebro Legal, Cerebro RR.HH. y Cerebro Operaciones' },
 };
 
@@ -226,8 +227,8 @@ const comercial = [
                 <h3>{t}</h3>
                 <p>{d}</p>
                 {shots[t] && (
-                  <figure class="browser browser-sm">
-                    <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+                  <figure class:list={['browser browser-sm', shots[t].phone && 'phone']}>
+                    {!shots[t].phone && <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>}
                     <img src={shots[t].src} width={shots[t].w} height={shots[t].h} alt={shots[t].alt} loading="lazy" />
                   </figure>
                 )}
@@ -285,6 +286,12 @@ const comercial = [
           <p class="lead" data-reveal style="--i:2">Sincronización programada: cuando cambia un documento en el origen, el índice se actualiza sin intervención manual.</p>
           <p class="lead" data-reveal style="--i:3">Cada base de conocimiento se separa por área o nivel de confidencialidad, para controlar quién consulta qué.</p>
         </div>
+        <figure class="shot" data-reveal style="--i:2">
+          <div class="browser browser-sm"><div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img src="/propuesta/cerebro-corporativo/conocimiento.png" width="1400" height="1120" alt="Base de conocimiento del área Legal con sus documentos indexados" loading="lazy" />
+          </div>
+          <figcaption>Base de conocimiento del área Legal: los documentos quedan indexados y listos para consultar.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -304,6 +311,12 @@ const comercial = [
             ))}
           </tbody>
         </table>
+        <figure class="shot" data-reveal style="--i:2">
+          <div class="browser browser-sm"><div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img src="/propuesta/cerebro-corporativo/fuente-detalle.png" width="1600" height="784" alt="Detalle de una fuente citada: el fragmento exacto del contrato y su porcentaje de relevancia" loading="lazy" />
+          </div>
+          <figcaption>Un clic en la fuente muestra el fragmento exacto del documento y qué tan relevante fue para la respuesta.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -321,6 +334,12 @@ const comercial = [
             </article>
           ))}
         </div>
+        <figure class="shot" data-reveal style="--i:2">
+          <div class="browser browser-sm"><div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img src="/propuesta/cerebro-corporativo/modelo-edit.png" width="1600" height="830" alt="Configuración del Cerebro Legal: instrucciones, conocimiento asignado y herramientas" loading="lazy" />
+          </div>
+          <figcaption>Cada cerebro tiene sus propias instrucciones, su base de conocimiento y sus herramientas.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -355,6 +374,14 @@ const comercial = [
             <span class="acc-denied" data-acc-denied><i class="lg-no"></i>Acceso bloqueado</span>
           </div>
         </div>
+      </div>
+    <div class="wrap">
+        <figure class="shot" data-reveal style="--i:2">
+          <div class="browser browser-sm"><div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img src="/propuesta/cerebro-corporativo/login.png" width="1480" height="980" alt="Pantalla de inicio de sesión de Eclipxia con Google y Microsoft" loading="lazy" />
+          </div>
+          <figcaption>Inicio de sesión con la cuenta corporativa: Google Workspace o Microsoft 365, sin contraseñas nuevas.</figcaption>
+        </figure>
       </div>
     </section>
 

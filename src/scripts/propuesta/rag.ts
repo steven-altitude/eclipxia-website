@@ -1,11 +1,11 @@
 import * as THREE from 'three';
-import { AMBER, CORAL, BLUE, clamp, isNarrow, lazyScene, rng, smooth, trackProgress, type SceneCtx, type SceneInstance } from './common';
+import { AMBER, CORAL, BLUE, clamp, lazyScene, rng, smooth, type SceneCtx, type SceneInstance } from './common';
 import { coronaMaterial, haloMaterial } from './shaders';
 
 const LUT = 48;
 const CLOUD_C = new THREE.Vector3(1.3, 0, 0);
 const NODE_P = new THREE.Vector3(5.1, 0.35, 0);
-const LOOP_SECONDS = 15;
+const LOOP_SECONDS = 26; // animacion automatica y lenta, de ingesta a respuesta
 
 const DOC_VERT = /* glsl */ `
   varying vec2 vUv;
@@ -243,12 +243,8 @@ function createRag(track: HTMLElement, steps: HTMLElement[], bar: HTMLElement | 
         fMat.uniforms.uPix.value = dpr * (h / 700);
       },
       frame(t) {
-        let p: number;
-        if (reduced) p = 1;
-        else if (isNarrow()) p = (t % LOOP_SECONDS) / LOOP_SECONDS;
-        else p = trackProgress(track);
-        // En loop movil, pausa breve al final para leer el resultado
-        if (!reduced && isNarrow()) p = clamp(p * 1.12);
+        // Loop automatico (no depende del scroll); al final se sostiene la respuesta unos segundos.
+        const p = reduced ? 1 : clamp(((t % LOOP_SECONDS) / LOOP_SECONDS) * 1.14);
 
         const frag = smooth(0.18, 0.38, p);
         const travel = clamp((p - 0.38) / 0.22);
@@ -282,7 +278,7 @@ function createRag(track: HTMLElement, steps: HTMLElement[], bar: HTMLElement | 
         ring.rotation.z = t * 0.5;
         (ring.material as THREE.MeshBasicMaterial).opacity = 0.22 + 0.5 * light;
 
-        if (!reduced) setActive(Math.min(steps.length - 1, Math.floor(p * steps.length)));
+        if (!reduced) setActive(p < 0.18 ? 0 : p < 0.38 ? 1 : p < 0.6 ? 2 : p < 0.78 ? 3 : 4);
         renderer.render(scene, camera);
       },
     };
