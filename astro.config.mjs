@@ -7,5 +7,6 @@ export default defineConfig({
   site: 'https://www.eclipxia.com',
   adapter: vercel(),
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  vite: { build: { chunkSizeWarningLimit: 600 } }, // three.js (chunk perezoso de /propuesta/)
+  integrations: [sitemap({ filter: (page) => !page.includes('/propuesta/') })],
 });

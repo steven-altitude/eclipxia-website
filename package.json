@@ -13,6 +13,10 @@
     "@astrojs/vercel": "^8.2.11",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "astro": "^5.17.1"
+    "astro": "^5.17.1",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.187.0"
   }
 }

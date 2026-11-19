@@ -11,6 +11,8 @@ export interface Props {
   ogType?: 'website' | 'article';
   /** JSON-LD adicional de la pagina (ej. BlogPosting en el blog) */
   jsonLd?: object | object[];
+  /** Pagina oculta: robots noindex y sin JSON-LD de organizacion */
+  noindex?: boolean;
 }
 
 const {
@@ -20,6 +22,7 @@ const {
   ogImage = 'https://www.eclipxia.com/eclipxia-logo.png',
   ogType = 'website',
   jsonLd: pageJsonLd,
+  noindex = false,
 } = Astro.props;
 const extraLd = pageJsonLd ? (Array.isArray(pageJsonLd) ? pageJsonLd : [pageJsonLd]) : [];
 
@@ -122,7 +125,7 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     <meta name="author" content="Eclipxia" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
     <meta name="google-site-verification" content="ahqm2V5tqRV9NV5XVrZWuiNnZXwyeLYJnfH2QJK8IPU" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -155,7 +158,7 @@ const jsonLd = {
       rel="stylesheet"
     />
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     {extraLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
 
     <!-- Enable progressive-enhancement reveal only when JS is available -->

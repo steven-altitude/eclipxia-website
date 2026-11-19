@@ -1,0 +1,557 @@
+---
+import BaseLayout, { WHATSAPP_URL, PHONE_DISPLAY } from '../../layouts/BaseLayout.astro';
+import '../../styles/propuesta.css';
+
+const problema = [
+  ['01', 'IA en la sombra', 'Empleados suben contratos, cifras y estrategias a cuentas personales de IA. La empresa no ve ni controla qué sale.'],
+  ['02', 'Conocimiento disperso', 'Manuales, políticas y contratos repartidos entre carpetas, correos y la cabeza de pocas personas.'],
+  ['03', 'Licencias que no escalan', 'Pagar USD 25–30 por usuario al mes para toda la plantilla cuesta caro, aunque la mayoría la use poco.'],
+];
+
+const solucion = [
+  ['Privado', 'Instalado en tu nube o servidor dedicado. Un entorno exclusivo por cliente, nunca compartido.'],
+  ['Con tu conocimiento', 'Responde con tus manuales, contratos y datos, y cita la fuente de cada respuesta.'],
+  ['Por departamento', 'Cerebros separados para Legal, RR.HH., Operaciones o Finanzas, cada uno con su acceso.'],
+  ['Pago por uso', 'Usuarios ilimitados. Pagas el consumo real, con límites por usuario, área y empresa.'],
+];
+
+const funciones = [
+  ['Conocimiento por área', 'Colecciones de documentos por departamento; carga de PDF, Word, Excel, PowerPoint y escaneados.'],
+  ['Respuestas con fuente', 'Cada respuesta muestra de qué documento salió, con un clic al fragmento.'],
+  ['Búsqueda híbrida', 'Por significado y por palabra exacta, con reordenamiento por relevancia.'],
+  ['Usuarios y permisos', 'Roles, grupos por área, permisos por asistente y por base de conocimiento, aprobación de usuarios nuevos.'],
+  ['Login corporativo', 'Google Workspace, Microsoft Entra ID, LDAP, alta y baja automática de usuarios.'],
+  ['Asistentes por departamento', 'Cada área tiene su asistente con instrucciones, conocimiento y herramientas propias.'],
+  ['Varios modelos', 'Elige el modelo por tarea y compara respuestas lado a lado.'],
+  ['Experiencia tipo ChatGPT', 'En español, historial y carpetas, chats compartidos, dictado por voz, app instalable en el celular, biblioteca de instrucciones.'],
+  ['Herramientas y agentes', 'Conexión a herramientas y sistemas externos, intérprete de código: base para los agentes de cada mes.'],
+  ['Mejora continua', 'Los usuarios califican respuestas y eso guía los ajustes del mantenimiento.'],
+];
+
+const shots = {
+  'Usuarios y permisos': { src: '/propuesta/cerebro-corporativo/grupos.png', w: 2400, h: 525, alt: 'Panel de grupos por área del cerebro corporativo: Comercial, Finanzas, Gerencia, Legal, Operaciones y RR.HH.' },
+  'Asistentes por departamento': { src: '/propuesta/cerebro-corporativo/cerebros.png', w: 2400, h: 428, alt: 'Lista de asistentes del cerebro corporativo: Cerebro Legal, Cerebro RR.HH. y Cerebro Operaciones' },
+};
+
+const ragSteps = [
+  ['01', 'Ingesta', 'Extrae texto y tablas de PDF, Word, Excel, sitios y bases de datos. Limpia y normaliza.'],
+  ['02', 'Fragmentos', 'Divide en fragmentos padre e hijo: los pequeños para buscar, los grandes para dar contexto.'],
+  ['03', 'Índice', 'Vectores generados dentro de tu servidor e índice de texto completo, con metadatos de área y vigencia.'],
+  ['04', 'Búsqueda', 'Búsqueda híbrida (semántica y por palabra exacta), filtro por permisos y reordenamiento por relevancia.'],
+  ['05', 'Respuesta', 'El modelo responde solo con lo recuperado y cita el documento y la sección de origen.'],
+];
+
+const fuentes = [
+  ['Documentos', 'PDF, Word, Excel, PowerPoint, texto. Incluye documentos escaneados con reconocimiento de texto.'],
+  ['Repositorios', 'SharePoint, OneDrive, Google Drive, Notion y carpetas de red.'],
+  ['Sistemas', 'Bases de datos SQL, ERP y CRM por API, en consultas de solo lectura.'],
+  ['Web', 'Sitio corporativo, intranet y portales internos, rastreados de forma programada.'],
+];
+
+const calidad = [
+  ['Respuesta con fuente', 'Cada respuesta indica el documento y la sección de donde sale.'],
+  ['"No lo sé" explícito', 'Umbral de relevancia: si no hay información suficiente, lo dice en vez de inventar.'],
+  ['Búsqueda híbrida + reordenamiento', 'Encuentra tanto conceptos como códigos, números de contrato y nombres exactos.'],
+  ['Filtros por metadatos', 'Prioriza la versión vigente de cada política y descarta documentos obsoletos.'],
+  ['Set de pruebas propio', 'Antes de salir a producción, se evalúa con preguntas reales de tu equipo y sus respuestas correctas.'],
+  ['Mejora continua', 'Las respuestas corregidas por usuarios alimentan ajustes en el mantenimiento mensual.'],
+];
+
+const usos = [
+  ['LEGAL', 'Contratos y normativa', '“¿Qué penalidad tiene el contrato con este proveedor si entregamos tarde?”'],
+  ['RECURSOS HUMANOS', 'Políticas internas', '“¿Cuántos días de vacaciones me corresponden y cómo los solicito?”'],
+  ['OPERACIONES', 'Procedimientos', '“¿Cuál es el procedimiento de despacho para un cliente de exportación?”'],
+  ['COMERCIAL', 'Productos y precios', '“¿Qué condiciones de pago aplican a un distribuidor nuevo?”'],
+  ['FINANZAS', 'Procesos y reportes', '“¿Qué documentos necesito para registrar el pago a un proveedor del exterior?”'],
+  ['GERENCIA', 'Visión completa', 'Acceso a todos los cerebros, para cruzar información entre áreas.'],
+];
+
+const acceso = [
+  ['01', 'Login corporativo', 'Inicio de sesión con Google Workspace o Microsoft 365. Sin contraseñas nuevas.'],
+  ['02', 'Grupos por área', 'Cada usuario pertenece a uno o varios grupos: Finanzas, Comercial, Gerencia.'],
+  ['03', 'Cerebros visibles', 'Cada grupo ve solo sus cerebros. Un analista no puede consultar los documentos de Gerencia.'],
+  ['04', 'Salida inmediata', 'Si alguien deja la empresa y se desactiva su cuenta corporativa, pierde el acceso al instante.'],
+];
+const accLabels = [
+  ['Legal', '#FFB547'],
+  ['RR.HH.', '#FF6A3D'],
+  ['Operaciones', '#4DA3FF'],
+  ['Finanzas', '#3DDC97'],
+  ['Gerencia', '#F2F2F4'],
+];
+
+const deptMeters = [
+  ['Legal', 38],
+  ['RR.HH.', 22],
+  ['Operaciones', 71],
+  ['Finanzas', 55],
+];
+
+const capas = [
+  ['Interfaz y accesos', 'Chat y login corporativo'],
+  ['Motor de conocimiento', 'Cerebros por área y búsqueda'],
+  ['Pasarela de modelos', 'Límites y consumo'],
+  ['Base vectorial', 'Vectores generados aquí'],
+  ['Sincronización', 'Actualiza el índice solo'],
+  ['Respaldos', 'Cifrados, a tu nombre'],
+];
+const capaColors = ['#FFB547', '#4DA3FF', '#FF6A3D', '#7DBBFF', '#3DDC97', '#C8C8CE'];
+
+const seguridad = [
+  ['Ubicación', 'Documentos, índice, registros y respaldos en tu nube o servidor, a nombre de tu empresa.'],
+  ['Lo que viaja al modelo', 'Solo la pregunta y los fragmentos necesarios. Tus documentos completos nunca salen.'],
+  ['Entrenamiento', 'APIs empresariales directas con retención cero: el proveedor no guarda ni entrena con tus datos.'],
+  ['Acceso', 'Login corporativo, grupos por área y desactivación inmediata al dar de baja una cuenta.'],
+  ['Red', 'Solo HTTPS expuesto. Administración por VPN, sin puertos abiertos a internet.'],
+  ['Trazabilidad', 'Registro de quién preguntó qué, qué fuentes se usaron y cuánto consumió.'],
+];
+
+const metodo = [
+  ['01 · 5 DÍAS HÁBILES', 'Diagnóstico y prototipo', 'Revisión de seguridad de datos y un prototipo funcionando con tres de tus documentos críticos.'],
+  ['02 · SEGÚN ALCANCE', 'Implementación', 'Despliegue en tu nube, login corporativo y tres cerebros departamentales.'],
+  ['03 · TALLER', 'Adopción', 'Capacitación a tu equipo para usarlo bien desde el primer día.'],
+  ['04 · MENSUAL', 'Gestión y evolución', 'Monitoreo, actualización del conocimiento y optimización del consumo.'],
+];
+
+const comparativa = [
+  ['Costo mensual', '~USD 3.000 fijos (USD 30 × 100)', 'Gestión USD 600–1.200 + consumo real con tope'],
+  ['Costo de entrada', 'Sin costo inicial', 'Implementación única USD 3.500–6.500'],
+  ['Usuarios', 'Pagas cada asiento, lo use o no', 'Ilimitados'],
+  ['Conocimiento', 'General, configuración por tu cuenta', 'Cerebros por área con fuentes citadas'],
+  ['Dónde viven los datos', 'Nube del proveedor', 'Tu infraestructura'],
+  ['Propiedad', 'Alquiler', 'La plataforma y el conocimiento son tuyos'],
+];
+
+const comercial = [
+  ['01 · DIAGNÓSTICO', 'USD 600–1.000', ['Revisión de seguridad de datos', 'Limpieza de 3 documentos críticos', 'Prototipo funcional en 5 días', 'Descontable de la implementación'], false],
+  ['02 · IMPLEMENTACIÓN ÚNICA', 'USD 3.500–6.500', ['Despliegue en tu nube privada', 'Login corporativo Google o Microsoft', '3 cerebros departamentales', 'Taller de adopción'], true],
+  ['03 · GESTIÓN MENSUAL', 'USD 600–1.200', ['Monitoreo del servidor', 'Actualización del conocimiento', 'Optimización del consumo', 'Un agente o flujo nuevo al mes'], false],
+];
+---
+
+<BaseLayout
+  title="Propuesta confidencial | Cerebro corporativo privado | Eclipxia"
+  description="Propuesta confidencial de Eclipxia."
+  canonical="https://www.eclipxia.com/propuesta/cerebro-corporativo/"
+  noindex
+>
+  <div class="pp-progress" data-progress aria-hidden="true"></div>
+
+  <header class="pp-top">
+    <a class="pp-logo" href="/propuesta/cerebro-corporativo/" aria-label="Eclipxia">
+      <img src="/eclipxia-logo.png" alt="Eclipxia" style="height:22px;width:auto" />
+    </a>
+    <span class="pp-tag">Propuesta confidencial</span>
+    <a class="pp-wa" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </header>
+
+  <main class="pp">
+    <!-- COVER -->
+    <section class="pp-hero" id="cover">
+      <div class="scene-box pp-hero-scene"><canvas data-scene="hero" aria-hidden="true"></canvas></div>
+      <div class="pp-hero-copy">
+        <p class="eyebrow hero-rise" style="--d:.1s">Eclipxia · Consultoría e ingeniería de IA · Ecuador</p>
+        <h1 class="hero-rise" style="--d:.25s">Tu cerebro corporativo <span class="grad">privado.</span></h1>
+        <p class="lead hero-rise" style="--d:.45s">Una IA que conoce los documentos, procedimientos y datos de tu empresa, con agentes que ejecutan el trabajo repetitivo. Instalada en tu propia infraestructura, con usuarios ilimitados y pago por consumo real.</p>
+        <p class="eyebrow hero-rise hero-conf" style="--d:.65s">Propuesta confidencial</p>
+      </div>
+      <span class="hero-cue" aria-hidden="true"></span>
+    </section>
+
+    <!-- PROBLEMA -->
+    <section class="sec alt" id="problema">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>El problema</p>
+        <h2 data-reveal style="--i:1">Tu equipo ya usa IA. La pregunta es con qué información y en qué cuentas.</h2>
+        <ol class="prob">
+          {problema.map(([n, t, d], i) => (
+            <li data-reveal style={`--i:${i + 2}`}>
+              <span class="big-num grad">{n}</span>
+              <div>
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- SOLUCION -->
+    <section class="sec" id="solucion">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>La solución</p>
+        <h2 data-reveal style="--i:1">Un ChatGPT corporativo que conoce tu empresa y es tuyo.</h2>
+        <div class="sol-grid">
+          {solucion.map(([t, d], i) => (
+            <article class:list={['card', i === 0 && 'card-hi']} data-reveal style={`--i:${i + 2}`}>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </article>
+          ))}
+        </div>
+        <p class="note" data-reveal style="--i:6">Y sobre la misma base, agentes de IA que ejecutan tareas completas: cada mes, uno nuevo.</p>
+      </div>
+    </section>
+
+    <!-- LA PLATAFORMA -->
+    <section class="sec alt" id="plataforma">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>La plataforma</p>
+        <h2 data-reveal style="--i:1">Así se ve el cerebro corporativo de tu empresa.</h2>
+
+        <div class="plat-top">
+          <figure class="browser" data-reveal style="--i:2">
+            <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img
+              src="/propuesta/cerebro-corporativo/chat.png"
+              width="1600"
+              height="1000"
+              alt="Interfaz del cerebro corporativo de Eclipxia con una respuesta citada"
+              loading="lazy"
+            />
+          </figure>
+          <aside class="rag-def" data-reveal style="--i:3">
+            <p class="eyebrow eyebrow-blue">¿Qué es RAG?</p>
+            <p class="rag-def-main">RAG (generación aumentada por recuperación) significa que, antes de responder, la IA busca en tus documentos y responde solo con lo que encontró, citando la fuente.</p>
+            <p class="rag-def-sub">Como un abogado que revisa el expediente antes de opinar. Tus datos no entrenan al modelo: los consulta en el momento.</p>
+          </aside>
+        </div>
+
+        <ul class="feat">
+          {funciones.map(([t, d], i) => (
+            <li data-reveal style={`--i:${(i % 2) + 1}`}>
+              <span class="feat-n">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{t}</h3>
+                <p>{d}</p>
+                {shots[t] && (
+                  <figure class="browser browser-sm">
+                    <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+                    <img src={shots[t].src} width={shots[t].w} height={shots[t].h} alt={shots[t].alt} loading="lazy" />
+                  </figure>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- RAG (sticky + three.js) -->
+    <section class="rag" id="rag">
+      <div class="rag-track" data-rag-track>
+        <div class="rag-sticky">
+          <div class="wrap rag-wrap">
+            <div class="rag-head">
+              <p class="eyebrow eyebrow-blue">Cómo funciona</p>
+              <h2>De tus documentos a una respuesta verificable, en cinco etapas.</h2>
+            </div>
+            <div class="rag-body">
+              <div class="scene-box rag-scene"><canvas data-scene="rag" aria-hidden="true"></canvas></div>
+              <ol class="rag-steps">
+                {ragSteps.map(([n, t, d]) => (
+                  <li class="rag-step" data-rag-step>
+                    <span class="rag-n">{n}</span>
+                    <div>
+                      <h3>{t}</h3>
+                      <p>{d}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <p class="note rag-note">Técnica conocida como RAG (generación aumentada por recuperación). El modelo no se reentrena con tus datos: los consulta en el momento. Tus documentos completos nunca salen de tu servidor.</p>
+            <div class="rag-bar" data-rag-bar aria-hidden="true"><i></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUENTES -->
+    <section class="sec alt" id="fuentes">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>Fuentes de conocimiento</p>
+        <h2 data-reveal style="--i:1">Se conecta a donde ya vive tu información.</h2>
+        <div class="src-grid">
+          {fuentes.map(([t, d], i) => (
+            <article class="card" data-reveal style={`--i:${i + 2}`}>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </article>
+          ))}
+        </div>
+        <div class="two">
+          <p class="lead" data-reveal style="--i:2">Sincronización programada: cuando cambia un documento en el origen, el índice se actualiza sin intervención manual.</p>
+          <p class="lead" data-reveal style="--i:3">Cada base de conocimiento se separa por área o nivel de confidencialidad, para controlar quién consulta qué.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALIDAD -->
+    <section class="sec" id="calidad">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>Calidad de respuesta</p>
+        <h2 data-reveal style="--i:1">Una IA corporativa no puede inventar. Así lo controlamos.</h2>
+        <table class="tbl" data-reveal style="--i:2">
+          <thead><tr><th>Control</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            {calidad.map(([a, b], i) => (
+              <tr style={`--r:${i}`}>
+                <td data-label="Control">{a}</td>
+                <td data-label="Qué hace">{b}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- USOS -->
+    <section class="sec alt" id="usos">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>Cerebros departamentales</p>
+        <h2 data-reveal style="--i:1">Un cerebro por área, con su propio conocimiento.</h2>
+        <div class="usos-grid">
+          {usos.map(([tag, t, d], i) => (
+            <article class:list={['card', i === 5 && 'card-hi']} data-reveal style={`--i:${(i % 3) + 2}`}>
+              <p class="tag">{tag}</p>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCESO (three.js grafo) -->
+    <section class="sec" id="acceso">
+      <div class="wrap acc-wrap">
+        <div class="acc-copy">
+          <p class="eyebrow eyebrow-green" data-reveal>Control de acceso</p>
+          <h2 data-reveal style="--i:1">Cada persona ve solo lo que su cargo le permite.</h2>
+          <ol class="acc-steps">
+            {acceso.map(([n, t, d], i) => (
+              <li data-reveal style={`--i:${i + 2}`}>
+                <span class="acc-n">{n}</span>
+                <div>
+                  <h3>{t}</h3>
+                  <p>{d}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p class="note note-green" data-reveal style="--i:6">Los permisos se aplican en el servidor, no en la pantalla: un usuario no puede llegar a un documento de otra área por ningún camino.</p>
+        </div>
+        <div class="scene-box acc-scene" data-reveal style="--i:2">
+          <canvas data-scene="acceso" role="img" aria-label="Grafo de usuarios conectados solo a su departamento; un acceso a un área ajena se corta"></canvas>
+          <div class="acc-labels" aria-hidden="true">
+            {accLabels.map(([n, c]) => (
+              <span class="acc-label" data-acc-label style={`--c:${c}`}>{n}</span>
+            ))}
+          </div>
+          <div class="acc-legend" aria-hidden="true">
+            <span><i class="lg-ok"></i>Acceso permitido</span>
+            <span class="acc-denied" data-acc-denied><i class="lg-no"></i>Acceso bloqueado</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSUMO -->
+    <section class="sec alt" id="consumo">
+      <div class="wrap" data-consumo>
+        <p class="eyebrow" data-reveal>Consumo bajo control</p>
+        <h2 data-reveal style="--i:1">Pagas lo que usas, con topes que tú defines.</h2>
+        <div class="cons-grid">
+          <article class="card card-hi cons-card" data-reveal style="--i:2">
+            <p class="tag">EMPRESA</p>
+            <h3>Tope mensual total</h3>
+            <div class="gauge" data-meter data-value="64">
+              <svg viewBox="0 0 200 112" aria-hidden="true">
+                <path class="g-trk" d="M20 100 A80 80 0 0 1 180 100" pathLength="100" />
+                <path class="g-ok" d="M20 100 A80 80 0 0 1 180 100" pathLength="100" stroke-dasharray="69 100" />
+                <path class="g-warn" d="M20 100 A80 80 0 0 1 180 100" pathLength="100" stroke-dasharray="0 70 19 100" />
+                <path class="g-hot" d="M20 100 A80 80 0 0 1 180 100" pathLength="100" stroke-dasharray="0 90 10 100" />
+                <g class="g-needle"><line x1="100" y1="100" x2="100" y2="36" /><circle cx="100" cy="100" r="6" /></g>
+              </svg>
+              <p class="g-val"><span data-num>0</span><small>% del tope</small></p>
+            </div>
+            <p>Un presupuesto máximo para toda la organización. Nunca recibes una factura sorpresa.</p>
+          </article>
+
+          <article class="card card-hi cons-card" data-reveal style="--i:3">
+            <p class="tag">DEPARTAMENTO</p>
+            <h3>Presupuesto por área</h3>
+            <div class="bars">
+              {deptMeters.map(([n, v]) => (
+                <div class="m-bar" data-meter data-value={v}>
+                  <div class="m-row"><span>{n}</span><b><span data-num>0</span>%</b></div>
+                  <div class="m-track"><i></i></div>
+                </div>
+              ))}
+            </div>
+            <p>Cada área tiene su asignación y sabes cuánto consume cada una.</p>
+          </article>
+
+          <article class="card card-hi cons-card" data-reveal style="--i:4">
+            <p class="tag">USUARIO</p>
+            <h3>Límite por persona</h3>
+            <div class="bars">
+              <div class="m-bar m-bar-lg" data-meter data-value="45">
+                <div class="m-row"><span>Tope por usuario</span><b><span data-num>0</span>%</b></div>
+                <div class="m-track"><i></i></div>
+              </div>
+            </div>
+            <p>Topes diarios o mensuales por usuario, para evitar abusos.</p>
+          </article>
+        </div>
+        <p class="ilus" data-reveal style="--i:4">Valores ilustrativos.</p>
+        <div class="two">
+          <p class="lead" data-reveal style="--i:2">Tablero de consumo en vivo y alertas al acercarse a cada tope.</p>
+          <p class="lead" data-reveal style="--i:3">El modelo se elige por tarea: uno económico para consultas simples, uno avanzado para análisis complejos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARQUITECTURA (sticky + three.js) -->
+    <section class="arq" id="arq">
+      <div class="arq-track" data-arq-track>
+        <div class="arq-sticky">
+          <div class="wrap arq-wrap">
+            <div class="arq-head">
+              <p class="eyebrow eyebrow-green">Arquitectura</p>
+              <h2>Un entorno exclusivo, dentro de tu perímetro.</h2>
+              <p class="arq-sub">Tu nube privada o servidor dedicado</p>
+            </div>
+            <div class="scene-box arq-scene">
+              <canvas data-scene="arq" role="img" aria-label="Vista isométrica del perímetro con seis capas apiladas; usuarios a la izquierda y modelos de lenguaje a la derecha"></canvas>
+              <div class="arq-chip" data-arq-chip="users"><p class="tag">ACCESO</p><h3>Usuarios</h3><p>Navegador o Teams, con cuenta corporativa.</p></div>
+              <div class="arq-chip arq-chip-llm" data-arq-chip="llm"><p class="tag">MODELOS</p><h3>LLM · APIs con retención cero</h3><p>APIs empresariales directas, retención cero.</p></div>
+            </div>
+            <ul class="arq-legend">
+              {capas.map(([t, d], i) => (
+                <li data-arq-layer tabindex="0" style={`--c:${capaColors[i]}`}>
+                  <i></i>
+                  <div>
+                    <h3>{t}</h3>
+                    <p>{d}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEGURIDAD -->
+    <section class="sec" id="seguridad">
+      <div class="wrap">
+        <p class="eyebrow eyebrow-green" data-reveal>Seguridad y privacidad</p>
+        <h2 data-reveal style="--i:1">Tu información se queda en tu infraestructura.</h2>
+        <table class="tbl tbl-green" data-reveal style="--i:2">
+          <thead><tr><th>Capa</th><th>Control</th></tr></thead>
+          <tbody>
+            {seguridad.map(([a, b], i) => (
+              <tr style={`--r:${i}`}>
+                <td data-label="Capa">{a}</td>
+                <td data-label="Control">{b}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- METODO -->
+    <section class="sec alt" id="metodo">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>Cómo trabajamos</p>
+        <h2 data-reveal style="--i:1">Lo ves funcionar con tus documentos antes de decidir.</h2>
+        <ol class="metodo">
+          {metodo.map(([n, t, d], i) => (
+            <li class:list={[i === 0 && 'is-first']} data-reveal style={`--i:${i + 2}`}>
+              <p class="tag">{n}</p>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="note" data-reveal style="--i:6">El valor del diagnóstico se descuenta de la implementación.</p>
+      </div>
+    </section>
+
+    <!-- COMPARATIVA -->
+    <section class="sec" id="comparativa">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>Comparación · Ejemplo con 100 usuarios</p>
+        <h2 data-reveal style="--i:1">Licencias por usuario contra un cerebro propio.</h2>
+        <table class="tbl tbl-cmp" data-reveal style="--i:2">
+          <thead>
+            <tr><th>Concepto</th><th>Licencias por usuario</th><th class="col-us">Cerebro corporativo Eclipxia</th></tr>
+          </thead>
+          <tbody>
+            {comparativa.map(([a, b, c], i) => (
+              <tr style={`--r:${i}`}>
+                <td data-label="Concepto">{a}</td>
+                <td data-label="Licencias por usuario">{b}</td>
+                <td class="col-us" data-label="Cerebro corporativo Eclipxia">{c}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- COMERCIAL -->
+    <section class="sec alt" id="comercial">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>Inversión</p>
+        <h2 data-reveal style="--i:1">Tres etapas, sin costo por usuario.</h2>
+        <div class="price-grid">
+          {comercial.map(([tag, price, items, hi], i) => (
+            <article class:list={['card', 'price', hi && 'card-hi']} data-reveal style={`--i:${i + 2}`}>
+              <p class="tag">{tag}</p>
+              <p class="price-big grad">{price}</p>
+              <ul>
+                {(items as string[]).map((it) => <li>{it}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+        <p class="note" data-reveal style="--i:5">Consumo de modelos: pago por uso real, facturado por el proveedor a nombre de tu empresa, con topes por usuario, área y empresa.</p>
+      </div>
+    </section>
+
+    <!-- CIERRE -->
+    <section class="sec cierre" id="cierre">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>Siguiente paso</p>
+        <h2 class="cierre-h" data-reveal style="--i:1">Pruébalo con tus propios documentos.</h2>
+        <p class="lead" data-reveal style="--i:2">En 5 días hábiles revisamos la seguridad de tus datos y te entregamos un prototipo funcionando con tres de tus documentos críticos. El valor se descuenta de la implementación.</p>
+        <div class="cierre-cta" data-reveal style="--i:3">
+          <a class="pp-btn" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Escribir por WhatsApp</a>
+          <a class="pp-btn pp-btn-ghost" href="mailto:hola@eclipxia.com">hola@eclipxia.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pp-foot">
+    <div class="wrap pp-foot-in">
+      <img src="/eclipxia-logo.png" alt="Eclipxia" style="height:18px;width:auto" />
+      <p class="eyebrow">
+        <a href="mailto:hola@eclipxia.com">hola@eclipxia.com</a>
+        <span>·</span>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">{PHONE_DISPLAY}</a>
+        <span>·</span>
+        eclipxia.com
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    import '../../scripts/propuesta/main.ts';
+  </script>
+</BaseLayout>
